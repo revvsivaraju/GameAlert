@@ -149,7 +149,11 @@
                     status: status,
                     saved: false,
                     notificationEnabled: false,
-                    source: 'schedule'
+                    source: 'schedule',
+                    // Sport-specific fields
+                    competition: row.competition || '',
+                    session: row.session || '',
+                    matchday: row.matchday || ''
                 };
 
                 matches.push(match);

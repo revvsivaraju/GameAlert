@@ -797,42 +797,136 @@ function createScheduleListItem(match) {
     };
     const statusColor = statusColors[status] || '#2196F3';
 
-    li.innerHTML = `
-        <div class="schedule-item-content">
-            <div class="schedule-item-main">
-                <div class="schedule-item-teams">
-                    <span class="team-name">${match.team1 || 'TBA'}</span>
-                    <span class="vs">vs</span>
-                    <span class="team-name">${match.team2 || 'TBA'}</span>
+    let innerHTML = '';
+
+    if (match.sport === 'f1') {
+        const sessionLabel = match.session || 'Race Day';
+        innerHTML = `
+            <div class="schedule-item-content f1-schedule">
+                <div class="schedule-item-main">
+                    <div class="schedule-item-teams">
+                        <span class="f1-session-badge">${sessionLabel}</span>
+                        <span class="f1-circuit-name">${match.competition || 'Grand Prix'}</span>
+                    </div>
+                    <div class="schedule-item-details">
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">📅</span>
+                            ${formattedDate}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">🕐</span>
+                            ${formattedTime}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">🏎️</span>
+                            ${match.venue || 'Circuit'}
+                        </span>
+                    </div>
                 </div>
-                <div class="schedule-item-details">
-                    <span class="schedule-detail-item">
-                        <span class="detail-icon">📅</span>
-                        ${formattedDate}
-                    </span>
-                    <span class="schedule-detail-item">
-                        <span class="detail-icon">🕐</span>
-                        ${formattedTime}
-                    </span>
-                    ${match.venue && match.venue !== 'TBA' ? `
-                    <span class="schedule-detail-item">
-                        <span class="detail-icon">📍</span>
-                        ${match.venue}
-                    </span>
-                    ` : ''}
-                    ${match.league ? `
-                    <span class="schedule-detail-item">
-                        <span class="detail-icon">🏆</span>
-                        ${match.league}
-                    </span>
-                    ` : ''}
+        `;
+    } else if (match.sport === 'cricket') {
+        const formatBadge = match.format ? `<span class="format-badge">${match.format}</span>` : '';
+        innerHTML = `
+            <div class="schedule-item-content">
+                <div class="schedule-item-main">
+                    <div class="schedule-item-teams">
+                        <span class="team-name">${match.team1 || 'TBA'}</span>
+                        <span class="vs">vs</span>
+                        <span class="team-name">${match.team2 || 'TBA'}</span>
+                        ${formatBadge}
+                    </div>
+                    <div class="schedule-item-details">
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">📅</span>
+                            ${formattedDate}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">🕐</span>
+                            ${formattedTime}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">🏏</span>
+                            ${match.league || 'Series'}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">📍</span>
+                            ${match.venue}
+                        </span>
+                    </div>
                 </div>
-            </div>
+        `;
+    } else if (match.sport === 'football') {
+        const matchdayInfo = match.matchday ? `<span class="matchday-info">${match.matchday}</span>` : '';
+        innerHTML = `
+            <div class="schedule-item-content">
+                <div class="schedule-item-main">
+                    <div class="schedule-item-teams">
+                        <span class="team-name">${match.team1 || 'TBA'}</span>
+                        <span class="vs">vs</span>
+                        <span class="team-name">${match.team2 || 'TBA'}</span>
+                    </div>
+                    <div class="schedule-item-details">
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">📅</span>
+                            ${formattedDate}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">🕐</span>
+                            ${formattedTime}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">⚽</span>
+                            ${match.competition || match.league || 'League'} ${matchdayInfo}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">📍</span>
+                            ${match.venue}
+                        </span>
+                    </div>
+                </div>
+        `;
+    } else {
+        // Fallback for other sports
+        innerHTML = `
+            <div class="schedule-item-content">
+                <div class="schedule-item-main">
+                    <div class="schedule-item-teams">
+                        <span class="team-name">${match.team1 || 'TBA'}</span>
+                        <span class="vs">vs</span>
+                        <span class="team-name">${match.team2 || 'TBA'}</span>
+                    </div>
+                    <div class="schedule-item-details">
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">📅</span>
+                            ${formattedDate}
+                        </span>
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">🕐</span>
+                            ${formattedTime}
+                        </span>
+                        ${match.venue && match.venue !== 'TBA' ? `
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">📍</span>
+                            ${match.venue}
+                        </span>
+                        ` : ''}
+                        ${match.league ? `
+                        <span class="schedule-detail-item">
+                            <span class="detail-icon">🏆</span>
+                            ${match.league}
+                        </span>
+                        ` : ''}
+                    </div>
+                </div>
+        `;
+    }
+
+    li.innerHTML = innerHTML + `
             <div class="schedule-item-actions">
                 <span class="schedule-status-badge" style="background-color: ${statusColor}">
                     ${status.charAt(0).toUpperCase() + status.slice(1)}
                 </span>
-                <button class="save-schedule-btn-small" data-match='${JSON.stringify(match)}'>
+                <button class="save-schedule-btn-small" data-match='${JSON.stringify(match).replace(/'/g, "&apos;")}'>
                     <span class="save-icon">💾</span> Save
                 </button>
             </div>
