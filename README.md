@@ -114,10 +114,64 @@ Works on all modern browsers:
 - Safari
 - Edge
 
+## Important: Running the Application
+
+**The application MUST be run through the backend server** to work properly. Do not open the HTML files directly in your browser.
+
+### Quick Start
+
+1. Install dependencies:
+```bash
+cd backend
+pip3 install -r requirements.txt
+```
+
+2. Start the server:
+```bash
+cd backend
+./start.sh
+# Or: python3 main.py
+```
+
+3. Access the application:
+- Open your browser and go to `http://localhost:8000`
+- Or go directly to the dashboard: `http://localhost:8000/dashboard.html`
+
+4. Stop the server when done:
+```bash
+cd backend
+./stop.sh
+```
+
+## Troubleshooting
+
+### Schedule not loading for selected teams
+
+**Issue**: When you select a team (e.g., India - International), the schedule shows "No schedules available" even though the JSON file exists.
+
+**Solution**:
+1. Make sure the backend server is running (`cd backend && ./start.sh`)
+2. Access the application via `http://localhost:8000` (NOT by opening HTML files directly)
+3. Check browser console for any errors
+4. Verify the schedule JSON file exists in the correct directory structure:
+   - Example: `Schedules/Cricket/International/India/India_Internation.json`
+
+### Backend server not starting
+
+**Issue**: Server fails to start with "No module named uvicorn" or similar errors.
+
+**Solution**:
+```bash
+cd backend
+pip3 install -r requirements.txt
+python3 main.py
+```
+
 ## Notes
 
 - Images are loaded from Unsplash CDN
 - Schedules are loaded from JSON files in the `Schedules/` directory
 - Match status is calculated based on current date/time
 - Browser notifications require user permission
+- The backend server must be running for schedule loading to work
 
