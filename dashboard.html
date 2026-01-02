@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Sports Selection</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <button class="back-button" onclick="window.location.href='index.html'">
+                    <span class="back-arrow">←</span> Back
+                </button>
+                <h1 class="dashboard-title">My Dashboard</h1>
+                <button class="add-match-button" id="addMatchButton">
+                    <span class="add-icon">+</span> Add Match
+                </button>
+            </div>
+        </header>
+        
+        <!-- Sport Filter Buttons -->
+        <div class="sport-filters">
+            <button class="sport-filter-btn active" data-sport="cricket" id="cricketFilterBtn">
+                <span class="sport-icon">🏏</span> Cricket
+            </button>
+            <button class="sport-filter-btn" data-sport="football" id="footballFilterBtn">
+                <span class="sport-icon">⚽</span> Football
+            </button>
+            <button class="sport-filter-btn" data-sport="f1" id="f1FilterBtn">
+                <span class="sport-icon">🏎️</span> F1
+            </button>
+        </div>
+        
+        <!-- Team Selection Section -->
+        <div class="team-selection-section" id="teamSelectionSection">
+            <div class="team-selection-header">
+                <h2 class="schedule-title" id="scheduleTitle">Cricket</h2>
+                <button class="edit-teams-btn" id="editTeamsBtn">
+                    <span class="edit-icon">✏️</span> Edit Teams
+                </button>
+            </div>
+            <div class="selected-teams-display" id="selectedTeamsDisplay">
+                <!-- Selected teams will be shown here -->
+            </div>
+            <div class="team-selector-box hidden" id="teamSelectorBox">
+                <div class="team-selector-content">
+                    <h3>Select Teams</h3>
+                    <div class="team-selector-options" id="teamSelectorOptions">
+                        <!-- Team options will be loaded here -->
+                    </div>
+                    <div class="team-selector-actions">
+                        <button class="cancel-btn" id="cancelTeamSelection">Cancel</button>
+                        <button class="save-btn" id="saveTeamSelection">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Schedule Section -->
+        <div class="schedule-section" id="scheduleSection">
+            <div class="schedule-header">
+                <h2 class="schedule-title">Schedules</h2>
+            </div>
+            <div class="schedule-list" id="scheduleContent">
+                <!-- Schedules will be loaded here as a list -->
+            </div>
+        </div>
+        
+        <!-- Matches Section (Hidden - for future use) -->
+        <div class="dashboard-section hidden" id="matchesSection">
+            <div class="dashboard-controls">
+                <div class="view-toggle">
+                    <button class="toggle-btn active" id="listViewBtn">List View</button>
+                    <button class="toggle-btn" id="calendarViewBtn">Calendar View</button>
+                </div>
+                
+                <div class="filter-tabs" id="filterTabs">
+                    <button class="filter-tab active" data-filter="all">All Matches</button>
+                    <button class="filter-tab" data-filter="football">Football</button>
+                    <button class="filter-tab" data-filter="cricket">Cricket</button>
+                    <button class="filter-tab" data-filter="f1">F1</button>
+                </div>
+                
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Search matches...">
+                </div>
+            </div>
+            
+            <div class="dashboard-content">
+            <!-- List View -->
+            <div class="matches-list-view" id="listView">
+                <div class="matches-grid" id="matchesGrid">
+                    <!-- Matches will be dynamically loaded here -->
+                </div>
+            </div>
+            
+            <!-- Calendar View -->
+            <div class="calendar-view hidden" id="calendarView">
+                <div class="calendar-container" id="calendarContainer">
+                    <!-- Calendar will be dynamically loaded here -->
+                </div>
+            </div>
+            
+            <div class="empty-state hidden" id="emptyState">
+            <div class="empty-icon">📅</div>
+            <h2>No matches saved yet</h2>
+            <p>Start by selecting teams and saving matches, or add a match manually.</p>
+            <button class="add-match-button" onclick="document.getElementById('addMatchButton').click()">
+                <span class="add-icon">+</span> Add Your First Match
+            </button>
+        </div>
+        </div>
+    </div>
+    
+    <!-- Add/Edit Match Modal -->
+    <div class="modal-overlay hidden" id="matchModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Add Match</h2>
+                <button class="close-btn" id="closeModalBtn">&times;</button>
+            </div>
+            <form id="matchForm" class="match-form">
+                <div class="form-group">
+                    <label for="matchSport">Sport</label>
+                    <select id="matchSport" name="sport" required>
+                        <option value="">Select Sport</option>
+                        <option value="football">Football</option>
+                        <option value="cricket">Cricket</option>
+                        <option value="f1">Formula 1</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="matchCategory">Category</label>
+                    <select id="matchCategory" name="category" required>
+                        <option value="">Select Category</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="matchTeam1">Team 1</label>
+                    <input type="text" id="matchTeam1" name="team1" placeholder="Enter team name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="matchTeam2">Team 2</label>
+                    <input type="text" id="matchTeam2" name="team2" placeholder="Enter team name" required>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="matchDate">Date</label>
+                        <input type="date" id="matchDate" name="date" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="matchTime">Time</label>
+                        <input type="time" id="matchTime" name="time" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="matchVenue">Venue</label>
+                    <input type="text" id="matchVenue" name="venue" placeholder="Enter venue name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="matchLeague">League/Tournament</label>
+                    <input type="text" id="matchLeague" name="league" placeholder="Enter league or tournament name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="matchStatus">Status</label>
+                    <select id="matchStatus" name="status" required>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="live">Live</option>
+                        <option value="completed">Completed</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <button type="button" class="cancel-button" id="cancelMatchBtn">Cancel</button>
+                    <button type="submit" class="save-button">Save Match</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <div class="message" id="message"></div>
+    
+    <script src="js/auth.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/selection.js"></script>
+    <script src="js/scheduleLoader.js"></script>
+    <script src="js/matches.js"></script>
+    <script src="js/matchForm.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/notifications.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
+

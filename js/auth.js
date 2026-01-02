@@ -211,10 +211,14 @@ const Auth = {
             })
         ];
         
+        // Store password temporarily for auto-login after verification
+        sessionStorage.setItem('pendingPassword', password);
+        
         // Use email as username (User Pool configured with Email as sign-in identifier)
         // If your pool uses email alias, you would use a unique username instead
         this.userPool.signUp(email, password, attributeList, null, (err, result) => {
             if (err) {
+                sessionStorage.removeItem('pendingPassword');
                 this.handleCognitoError(err);
                 return;
             }
@@ -257,24 +261,146 @@ const Auth = {
         });
         
         // Confirm registration
-        cognitoUser.confirmRegistration(code, true, (err, result) => {
+        cognitoUser.confirmRegistration(code, true, async (err, result) => {
             if (err) {
                 this.handleCognitoError(err);
                 return;
             }
             
+            const email = sessionStorage.getItem('pendingVerificationEmail');
             sessionStorage.removeItem('pendingVerificationEmail');
-            this.showMessage('Email verified! You can now sign in.', 'success');
             
-            // Switch to login form
-            setTimeout(() => {
-                this.showLoginForm();
-                const loginTitle = document.getElementById('loginTitle');
-                const loginSubtitle = document.getElementById('loginSubtitle');
-                if (loginTitle) loginTitle.textContent = 'Welcome Back';
-                if (loginSubtitle) loginSubtitle.textContent = 'Sign in to save your preferences';
-            }, 1500);
+            // Auto-login the user after verification
+            this.showMessage('Email verified! Logging you in...', 'success');
+            
+            // Get password from signup form (stored temporarily)
+            const password = sessionStorage.getItem('pendingPassword');
+            sessionStorage.removeItem('pendingPassword');
+            
+            if (password) {
+                // Auto-authenticate
+                const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
+                    Username: email,
+                    Password: password
+                });
+                
+                cognitoUser.authenticateUser(authenticationDetails, {
+                    onSuccess: async (authResult) => {
+                        // Store tokens
+                        this.storeTokens(authResult, false, email);
+                        
+                        // Get user attributes
+                        cognitoUser.getUserAttributes((err, attributes) => {
+                            if (!err && attributes) {
+                                const givenNameAttr = attributes.find(attr => attr.Name === 'given_name');
+                                const familyNameAttr = attributes.find(attr => attr.Name === 'family_name');
+                                const nameAttr = attributes.find(attr => attr.Name === 'name');
+                                
+                                let name = email.split('@')[0];
+                                if (givenNameAttr && familyNameAttr) {
+                                    name = `${givenNameAttr.Value} ${familyNameAttr.Value}`.trim();
+                                } else if (givenNameAttr) {
+                                    name = givenNameAttr.Value;
+                                } else if (nameAttr) {
+                                    name = nameAttr.Value;
+                                }
+                                
+                                this.createSession({ email, name, userId: authResult.getIdToken().payload.sub }, false);
+                            } else {
+                                this.createSession({ email, name: email.split('@')[0], userId: authResult.getIdToken().payload.sub }, false);
+                            }
+                        });
+                        
+                        // Migrate temp selections (async)
+                        this.migrateTempSelections().then(migratedSport => {
+                            // Redirect to dashboard
+                            setTimeout(() => {
+                                let redirectUrl = 'dashboard.html';
+                                if (migratedSport) {
+                                    redirectUrl += `?sport=${migratedSport}`;
+                                }
+                                window.location.href = redirectUrl;
+                            }, 500);
+                        }).catch(error => {
+                            console.error('Error during migration, redirecting anyway:', error);
+                            // Redirect even if migration fails
+                            setTimeout(() => {
+                                window.location.href = 'dashboard.html';
+                            }, 500);
+                        });
+                    },
+                    onFailure: (err) => {
+                        // If auto-login fails, show login form
+                        this.handleCognitoError(err);
+                        setTimeout(() => {
+                            this.showLoginForm();
+                            const loginTitle = document.getElementById('loginTitle');
+                            const loginSubtitle = document.getElementById('loginSubtitle');
+                            if (loginTitle) loginTitle.textContent = 'Welcome Back';
+                            if (loginSubtitle) loginSubtitle.textContent = 'Sign in to save your preferences';
+                        }, 1500);
+                    }
+                });
+            } else {
+                // No password stored, show login form
+                this.showMessage('Email verified! You can now sign in.', 'success');
+                setTimeout(() => {
+                    this.showLoginForm();
+                    const loginTitle = document.getElementById('loginTitle');
+                    const loginSubtitle = document.getElementById('loginSubtitle');
+                    if (loginTitle) loginTitle.textContent = 'Welcome Back';
+                    if (loginSubtitle) loginSubtitle.textContent = 'Sign in to save your preferences';
+                }, 1500);
+            }
         });
+    },
+    
+    // Migrate temporary selections to user account
+    async migrateTempSelections() {
+        try {
+            const tempSelections = sessionStorage.getItem('tempSelections');
+            if (!tempSelections) {
+                return null; // No temp selections to migrate
+            }
+            
+            const selections = JSON.parse(tempSelections);
+            if (!Array.isArray(selections) || selections.length === 0) {
+                return null;
+            }
+            
+            // Get user ID
+            const user = this.getCurrentUser();
+            if (!user || !user.userId) {
+                console.warn('Cannot migrate selections: user not found');
+                return null;
+            }
+            
+            // Migrate each selection
+            let migratedSport = null;
+            for (const selection of selections) {
+                try {
+                    await API.saveSelections(
+                        selection.sport,
+                        selection.selections,
+                        selection.category
+                    );
+                    // Track the first sport for redirect
+                    if (!migratedSport) {
+                        migratedSport = selection.sport;
+                    }
+                } catch (error) {
+                    console.error(`Failed to migrate selection for ${selection.sport}:`, error);
+                }
+            }
+            
+            // Clear temp selections after migration
+            sessionStorage.removeItem('tempSelections');
+            
+            return migratedSport; // Return sport for redirect
+        } catch (error) {
+            console.error('Error migrating temp selections:', error);
+            return null;
+        }
     },
     
     // Resend verification code
@@ -364,12 +490,37 @@ const Auth = {
                 
                 this.showMessage('Login successful! Redirecting...', 'success');
                 
-                // Redirect after short delay
-                setTimeout(() => {
-                    const redirectUrl = sessionStorage.getItem('redirectAfterLogin') || 'index.html';
-                    sessionStorage.removeItem('redirectAfterLogin');
-                    window.location.href = redirectUrl;
-                }, 1000);
+                // Migrate temp selections if any (async)
+                this.migrateTempSelections().then(migratedSport => {
+                    // Redirect after short delay
+                    setTimeout(() => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const redirect = urlParams.get('redirect');
+                        let redirectUrl = redirect === 'dashboard' 
+                            ? 'dashboard.html' 
+                            : (sessionStorage.getItem('redirectAfterLogin') || 'dashboard.html');
+                        
+                        // Add sport parameter if we migrated selections
+                        if (migratedSport) {
+                            redirectUrl += (redirectUrl.includes('?') ? '&' : '?') + `sport=${migratedSport}`;
+                        }
+                        
+                        sessionStorage.removeItem('redirectAfterLogin');
+                        window.location.href = redirectUrl;
+                    }, 1000);
+                }).catch(error => {
+                    console.error('Error during migration, redirecting anyway:', error);
+                    // Redirect even if migration fails
+                    setTimeout(() => {
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const redirect = urlParams.get('redirect');
+                        const redirectUrl = redirect === 'dashboard' 
+                            ? 'dashboard.html' 
+                            : (sessionStorage.getItem('redirectAfterLogin') || 'dashboard.html');
+                        sessionStorage.removeItem('redirectAfterLogin');
+                        window.location.href = redirectUrl;
+                    }, 1000);
+                });
             },
             onFailure: (err) => {
                 this.handleCognitoError(err);

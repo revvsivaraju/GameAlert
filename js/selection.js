@@ -130,6 +130,9 @@ const sportData = {
     }
 };
 
+// Make sportData available globally for dashboard.js
+window.sportData = sportData;
+
 // Get sport from URL parameter
 function getSportFromURL() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -335,6 +338,22 @@ function showMessage(text, type = 'success') {
     }, 3000);
 }
 
+// Get temporary selections from sessionStorage
+function getTempSelections() {
+    try {
+        const temp = sessionStorage.getItem('tempSelections');
+        return temp ? JSON.parse(temp) : [];
+    } catch (error) {
+        console.error('Error getting temp selections:', error);
+        return [];
+    }
+}
+
+// Clear temporary selections
+function clearTempSelections() {
+    sessionStorage.removeItem('tempSelections');
+}
+
 // Save selections
 async function saveSelections() {
     const sport = getSportFromURL();
@@ -346,24 +365,116 @@ async function saveSelections() {
         return;
     }
     
+    // Check if user is logged in
+    const isLoggedIn = window.Auth && window.Auth.isAuthenticated();
+    
     const saveButton = document.getElementById('saveButton');
     saveButton.disabled = true;
     saveButton.innerHTML = '<span class="save-icon">⏳</span> Saving...';
     
     try {
-        const response = await API.saveSelections(sport, selections, category);
-        showMessage(response.message, 'success');
-        
-        // Reset button after a delay
-        setTimeout(() => {
+        if (!isLoggedIn) {
+            // Store temporarily in sessionStorage
+            const tempSelections = getTempSelections();
+            const newSelection = {
+                sport: sport,
+                category: category,
+                selections: selections,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Check if selection for this sport/category already exists
+            const existingIndex = tempSelections.findIndex(
+                s => s.sport === sport && s.category === category
+            );
+            
+            if (existingIndex >= 0) {
+                tempSelections[existingIndex] = newSelection;
+            } else {
+                tempSelections.push(newSelection);
+            }
+            
+            sessionStorage.setItem('tempSelections', JSON.stringify(tempSelections));
+            
+            // Show signup prompt
+            showSignupPrompt(sport);
+            
+            // Reset button
             saveButton.innerHTML = '<span class="save-icon">💾</span> Save Selections';
             saveButton.disabled = false;
-        }, 2000);
+        } else {
+            // User is logged in, save normally
+            const response = await API.saveSelections(sport, selections, category);
+            showMessage(response.message, 'success');
+            
+            // Generate matches for selected teams
+            if (window.Matches) {
+                const generatedMatches = await Matches.generateMatches([{
+                    sport: sport,
+                    category: category,
+                    teams: selections
+                }]);
+                
+                // Store generated matches temporarily (user can save them in dashboard)
+                sessionStorage.setItem('generatedMatches', JSON.stringify(generatedMatches));
+            }
+            
+            // Reset button after a delay
+            setTimeout(() => {
+                saveButton.innerHTML = '<span class="save-icon">💾</span> Save Selections';
+                saveButton.disabled = false;
+            }, 2000);
+        }
     } catch (error) {
         showMessage(error.message || 'Failed to save selections', 'error');
         saveButton.innerHTML = '<span class="save-icon">💾</span> Save Selections';
         saveButton.disabled = false;
     }
+}
+
+// Show signup prompt banner
+function showSignupPrompt(sport) {
+    // Remove existing prompt if any
+    const existingPrompt = document.getElementById('signupPrompt');
+    if (existingPrompt) {
+        existingPrompt.remove();
+    }
+    
+    // Create prompt banner
+    const prompt = document.createElement('div');
+    prompt.id = 'signupPrompt';
+    prompt.className = 'signup-prompt';
+    prompt.innerHTML = `
+        <div class="signup-prompt-content">
+            <div class="signup-prompt-icon">👤</div>
+            <div class="signup-prompt-text">
+                <h3>Sign up to create your profile and save your selections</h3>
+                <p>Your selections have been saved temporarily. Create an account to access them from your dashboard.</p>
+            </div>
+            <button class="signup-prompt-button" id="signupPromptButton">
+                Sign Up Now
+            </button>
+        </div>
+    `;
+    
+    // Insert before selection actions
+    const selectionActions = document.querySelector('.selection-actions');
+    selectionActions.parentNode.insertBefore(prompt, selectionActions);
+    
+    // Add event listener to signup button
+    document.getElementById('signupPromptButton').addEventListener('click', function() {
+        // Store current URL to redirect back after signup
+        const currentUrl = window.location.href;
+        sessionStorage.setItem('redirectAfterSignup', currentUrl);
+        
+        // Redirect to login page with signup mode
+        window.location.href = 'login.html?signup=true&redirect=dashboard';
+    });
+    
+    // Animate in
+    setTimeout(() => {
+        prompt.classList.add('show');
+    }, 100);
 }
 
 // Check and display user info if logged in
@@ -390,5 +501,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Add event listener to save button
     document.getElementById('saveButton').addEventListener('click', saveSelections);
+    
+    // Check if there are temp selections and user is now logged in
+    const isLoggedIn = window.Auth && window.Auth.isAuthenticated();
+    if (isLoggedIn) {
+        const tempSelections = getTempSelections();
+        if (tempSelections.length > 0) {
+            // Show message that selections can be migrated
+            showMessage('You have temporary selections. They will be saved to your account.', 'info');
+        }
+    }
 });
 

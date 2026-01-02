@@ -1,6 +1,5 @@
 // AWS Cognito Configuration
 // Replace these values with your actual AWS Cognito User Pool details
-// See AWS_COGNITO_SETUP.md for setup instructions
 
 const AWS_CONFIG = {
     // Your AWS Region (e.g., 'us-east-1', 'us-west-2', 'eu-west-1')

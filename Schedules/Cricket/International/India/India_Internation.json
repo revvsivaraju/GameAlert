@@ -1,0 +1,308 @@
+[
+  {
+    "date": "2026-01-11",
+    "time": "1:30 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "New Zealand",
+    "location": "Kotambi Stadium (BCA Stadium), Vadodara, Gujarat, India",
+    "series": "New Zealand tour of India 2026",
+    "format": "ODI"
+  },
+  {
+    "date": "2026-01-14",
+    "time": "1:30 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "New Zealand",
+    "location": "Niranjan Shah Stadium, Rajkot, Gujarat, India",
+    "series": "New Zealand tour of India 2026",
+    "format": "ODI"
+  },
+  {
+    "date": "2026-01-18",
+    "time": "1:30 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "New Zealand",
+    "location": "Holkar Cricket Stadium, Indore, Madhya Pradesh, India",
+    "series": "New Zealand tour of India 2026",
+    "format": "ODI"
+  },
+  {
+    "date": "2026-01-21",
+    "time": "7:00 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "New Zealand",
+    "location": "Vidarbha Cricket Association Stadium, Nagpur, Maharashtra, India",
+    "series": "New Zealand tour of India 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-01-23",
+    "time": "7:00 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "New Zealand",
+    "location": "Shaheed Veer Narayan Singh International Stadium, Raipur, Chhattisgarh, India",
+    "series": "New Zealand tour of India 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-01-25",
+    "time": "7:00 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "New Zealand",
+    "location": "Barsapara Cricket Stadium, Guwahati, Assam, India",
+    "series": "New Zealand tour of India 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-01-28",
+    "time": "7:00 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "New Zealand",
+    "location": "ACA-VDCA Cricket Stadium, Visakhapatnam, Andhra Pradesh, India",
+    "series": "New Zealand tour of India 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-01-31",
+    "time": "7:00 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "New Zealand",
+    "location": "Greenfield International Stadium, Thiruvananthapuram, Kerala, India",
+    "series": "New Zealand tour of India 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-02-07",
+    "time": "7:00 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "USA",
+    "location": "Wankhede Stadium, Mumbai, Maharashtra, India",
+    "series": "World Cup group stage",
+    "format": "T20"
+  },
+  {
+    "date": "2026-02-12",
+    "time": "7:00 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "Namibia",
+    "location": "Arun Jaitley Stadium, New Delhi, Delhi, India",
+    "series": "World Cup group stage",
+    "format": "T20"
+  },
+  {
+    "date": "2026-02-15",
+    "time": "7:00 PM LOCAL",
+    "team(home)": "India",
+    "opponent(away)": "Pakistan",
+    "location": "R. Premadasa Stadium, Colombo, Sri Lanka",
+    "series": "World Cup group stage",
+    "format": "T20"
+  },
+  {
+    "date": "2026-02-18",
+    "time": "7:00 PM IST",
+    "team(home)": "India",
+    "opponent(away)": "Netherlands",
+    "location": "Narendra Modi Stadium, Ahmedabad, Gujarat, India",
+    "series": "World Cup group stage",
+    "format": "T20"
+  },
+  {
+    "date": "2026-02-07",
+    "time": "TBA",
+    "team(home)": "India",
+    "opponent(away)": "tbh",
+    "location": "TBA",
+    "series": "ICC Men's T20 World Cup 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-06-TBA",
+    "time": "TBA",
+    "team(home)": "India",
+    "opponent(away)": "Afghanistan",
+    "location": "TBA",
+    "series": "Afghanistan tour of India 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-06-TBA",
+    "time": "TBA",
+    "team(home)": "India",
+    "opponent(away)": "Afghanistan",
+    "location": "TBA",
+    "series": "Afghanistan tour of India 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-07-01",
+    "time": "6:30 PM LOCAL",
+    "team(home)": "England",
+    "opponent(away)": "India",
+    "location": "Riverside Ground, Chester-le-Street, County Durham, England, United Kingdom",
+    "series": "India tour of England 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-07-04",
+    "time": "2:30 PM LOCAL",
+    "team(home)": "England",
+    "opponent(away)": "India",
+    "location": "Old Trafford Cricket Ground, Manchester, England, United Kingdom",
+    "series": "India tour of England 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-07-07",
+    "time": "6:30 PM LOCAL",
+    "team(home)": "England",
+    "opponent(away)": "India",
+    "location": "Trent Bridge, Nottingham, England, United Kingdom",
+    "series": "India tour of England 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-07-09",
+    "time": "6:30 PM LOCAL",
+    "team(home)": "England",
+    "opponent(away)": "India",
+    "location": "County Ground, Bristol, England, United Kingdom",
+    "series": "India tour of England 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-07-11",
+    "time": "6:30 PM LOCAL",
+    "team(home)": "England",
+    "opponent(away)": "India",
+    "location": "The Rose Bowl (Utilita Bowl), Southampton, England, United Kingdom",
+    "series": "India tour of England 2026",
+    "format": "T20I"
+  },
+  {
+    "date": "2026-07-14",
+    "time": "TBA",
+    "team(home)": "England",
+    "opponent(away)": "India",
+    "location": "Edgbaston Cricket Ground, Birmingham, England, United Kingdom",
+    "series": "India tour of England 2026",
+    "format": "ODI"
+  },
+  {
+    "date": "2026-07-16",
+    "time": "TBA",
+    "team(home)": "England",
+    "opponent(away)": "India",
+    "location": "Sophia Gardens, Cardiff, Wales, United Kingdom",
+    "series": "India tour of England 2026",
+    "format": "ODI"
+  },
+  {
+    "date": "2026-07-19",
+    "time": "TBA",
+    "team(home)": "England",
+    "opponent(away)": "India",
+    "location": "Lord's Cricket Ground, London, England, United Kingdom",
+    "series": "India tour of England 2026",
+    "format": "ODI"
+  },
+  {
+    "date": "2026-08-TBA",
+    "time": "TBA",
+    "team(home)": "Sri Lanka",
+    "opponent(away)": "India",
+    "location": "TBA",
+    "series": "India tour of Sri Lanka 2026",
+    "format": "Test"
+  },
+  {
+    "date": "2026-09-TBA",
+    "time": "TBA",
+    "team(home)": "Bangladesh",
+    "opponent(away)": "India",
+    "location": "TBA",
+    "series": "India tour of Bangladesh 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-09-TBA",
+    "time": "TBA",
+    "team(home)": "Bangladesh",
+    "opponent(away)": "India",
+    "location": "TBA",
+    "series": "India tour of Bangladesh 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-TBA",
+    "time": "TBA",
+    "team(home)": "India",
+    "opponent(away)": "Afghanistan",
+    "location": "TBA",
+    "series": "Afghanistan vs India in India 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-TBA",
+    "time": "TBA",
+    "team(home)": "India",
+    "opponent(away)": "West Indies",
+    "location": "TBA",
+    "series": "West Indies tour of India 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-TBA",
+    "time": "TBA",
+    "team(home)": "India",
+    "opponent(away)": "West Indies",
+    "location": "TBA",
+    "series": "West Indies tour of India 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-10-TBA",
+    "time": "TBA",
+    "team(home)": "New Zealand",
+    "opponent(away)": "India",
+    "location": "TBA",
+    "series": "India tour of New Zealand 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-10-TBA",
+    "time": "TBA",
+    "team(home)": "New Zealand",
+    "opponent(away)": "India",
+    "location": "TBA",
+    "series": "India tour of New Zealand 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-10-TBA",
+    "time": "TBA",
+    "team(home)": "New Zealand",
+    "opponent(away)": "India",
+    "location": "TBA",
+    "series": "India tour of New Zealand 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-12-TBA",
+    "time": "TBA",
+    "team(home)": "India",
+    "opponent(away)": "Sri Lanka",
+    "location": "TBA",
+    "series": "Sri Lanka tour of India 2026",
+    "format": "TBA"
+  },
+  {
+    "date": "2026-12-TBA",
+    "time": "TBA",
+    "team(home)": "India",
+    "opponent(away)": "Sri Lanka",
+    "location": "TBA",
+    "series": "Sri Lanka tour of India 2026",
+    "format": "TBA"
+  }
+]

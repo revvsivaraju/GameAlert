@@ -16,7 +16,7 @@
             
             <div class="form-container">
                 <!-- Login Form -->
-                <form id="loginForm" class="auth-form active">
+                <form id="loginForm" class="auth-form active" method="POST" onsubmit="return false;">
                     <div class="form-group">
                         <label for="loginEmail">Email</label>
                         <input 
@@ -57,7 +57,7 @@
                 </form>
                 
                 <!-- Forgot Password Form -->
-                <form id="forgotPasswordForm" class="auth-form">
+                <form id="forgotPasswordForm" class="auth-form" method="POST" onsubmit="return false;">
                     <div class="form-group">
                         <label for="forgotPasswordEmail">Email</label>
                         <input 
@@ -78,7 +78,7 @@
                 </form>
                 
                 <!-- Reset Password Form (after code is sent) -->
-                <form id="resetPasswordForm" class="auth-form">
+                <form id="resetPasswordForm" class="auth-form" method="POST" onsubmit="return false;">
                     <div class="form-group">
                         <label for="resetCode">Verification Code</label>
                         <input 
@@ -124,7 +124,7 @@
                 </form>
                 
                 <!-- Email Verification Form (for new signups) -->
-                <form id="verifyEmailForm" class="auth-form">
+                <form id="verifyEmailForm" class="auth-form" method="POST" onsubmit="return false;">
                     <div class="form-group">
                         <label for="verificationCode">Verification Code</label>
                         <input 
@@ -145,7 +145,7 @@
                 </form>
                 
                 <!-- Sign Up Form -->
-                <form id="signupForm" class="auth-form">
+                <form id="signupForm" class="auth-form" method="POST" onsubmit="return false;">
                     <div class="form-group">
                         <label for="signupName">Full Name</label>
                         <input 

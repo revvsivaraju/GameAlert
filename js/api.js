@@ -1,5 +1,8 @@
 // API for saving user selections (with AWS Cognito token support)
 const API = {
+    // Backend API base URL
+    baseURL: 'http://localhost:8000',
+    
     // Get authentication headers for API calls
     getAuthHeaders() {
         const headers = {
@@ -17,85 +20,72 @@ const API = {
         return headers;
     },
     
-    // Simulate API call with delay (in production, this would call your backend API)
+    // Helper to get user ID
+    getUserId() {
+        if (window.Auth && window.Auth.isAuthenticated()) {
+            const user = window.Auth.getCurrentUser();
+            return user ? user.userId : null;
+        }
+        return null;
+    },
+    
+    // Save selections to backend
     async saveSelections(sport, selections, category = null) {
-        return new Promise((resolve, reject) => {
-            // Simulate network delay
-            setTimeout(() => {
-                try {
-                    // Get current user if logged in
-                    let userId = null;
-                    let idToken = null;
-                    
-                    if (window.Auth && window.Auth.isAuthenticated()) {
-                        const user = window.Auth.getCurrentUser();
-                        if (user) {
-                            userId = user.userId;
-                        }
-                        idToken = window.Auth.getIdToken();
-                    }
-                    
-                    // In a real app, this would be a fetch call to your backend API:
-                    /*
-                    const response = await fetch('https://your-api.com/selections', {
-                        method: 'POST',
-                        headers: this.getAuthHeaders(),
-                        body: JSON.stringify({
-                            sport: sport,
-                            category: category,
-                            selections: selections
-                        })
-                    });
-                    const data = await response.json();
-                    */
-                    
-                    // For now, we'll save to localStorage and log to console
-                    const data = {
-                        userId: userId,
-                        sport: sport,
-                        category: category,
-                        selections: selections,
-                        timestamp: new Date().toISOString(),
-                        // Include token info for reference (in production, tokens are sent in headers)
-                        hasAuth: !!idToken
-                    };
-                    
-                    // Save to localStorage
-                    const savedData = JSON.parse(localStorage.getItem('sportsSelections') || '[]');
-                    savedData.push(data);
-                    localStorage.setItem('sportsSelections', JSON.stringify(savedData));
-                    
-                    // Simulate successful response
-                    resolve({
-                        success: true,
-                        message: 'Selections saved successfully!',
-                        data: data
-                    });
-                } catch (error) {
-                    reject({
-                        success: false,
-                        message: 'Failed to save selections. Please try again.',
-                        error: error
-                    });
-                }
-            }, 1000); // 1 second delay to simulate network request
-        });
+        try {
+            const userId = this.getUserId();
+            let url = `${this.baseURL}/api/selections`;
+            if (userId) {
+                url += `?userId=${encodeURIComponent(userId)}`;
+            }
+            
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: this.getAuthHeaders(),
+                body: JSON.stringify({
+                    sport: sport,
+                    category: category,
+                    selections: selections
+                })
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to save selections');
+            }
+            
+            const data = await response.json();
+            return {
+                success: true,
+                message: data.message || 'Selections saved successfully!',
+                data: data.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message || 'Failed to save selections. Please try again.',
+                error: error
+            };
+        }
     },
     
     // Get saved selections (optional - for future use)
-    getSelections(sport, userId = null) {
+    async getSelections(sport, userId = null) {
         try {
-            const savedData = JSON.parse(localStorage.getItem('sportsSelections') || '[]');
-            let filtered = savedData.filter(item => item.sport === sport);
+            const url = userId 
+                ? `${this.baseURL}/api/selections/${sport}?userId=${userId}`
+                : `${this.baseURL}/api/selections/${sport}`;
             
-            // If user is logged in, filter by userId; otherwise show only non-user selections
-            if (userId) {
-                filtered = filtered.filter(item => item.userId === userId);
-            } else {
-                filtered = filtered.filter(item => !item.userId);
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: this.getAuthHeaders()
+            });
+            
+            if (!response.ok) {
+                return [];
             }
             
-            return filtered;
+            const data = await response.json();
+            return data.data || [];
         } catch (error) {
             console.error('Error getting selections:', error);
             return [];
@@ -103,13 +93,172 @@ const API = {
     },
     
     // Get user's saved selections
-    getUserSelections(userId) {
+    async getUserSelections(userId) {
         try {
-            const savedData = JSON.parse(localStorage.getItem('sportsSelections') || '[]');
-            return savedData.filter(item => item.userId === userId);
+            const url = userId 
+                ? `${this.baseURL}/api/selections?userId=${userId}`
+                : `${this.baseURL}/api/selections`;
+            
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: this.getAuthHeaders()
+            });
+            
+            if (!response.ok) {
+                return [];
+            }
+            
+            const data = await response.json();
+            return data.data || [];
         } catch (error) {
             console.error('Error getting user selections:', error);
             return [];
+        }
+    },
+    
+    // Match CRUD Operations
+    async saveMatch(match) {
+        try {
+            const userId = this.getUserId();
+            const response = await fetch(`${this.baseURL}/api/matches`, {
+                method: 'POST',
+                headers: this.getAuthHeaders(),
+                body: JSON.stringify({
+                    sport: match.sport,
+                    category: match.category,
+                    team1: match.team1,
+                    team2: match.team2,
+                    date: match.date,
+                    time: match.time,
+                    venue: match.venue,
+                    league: match.league,
+                    status: match.status || 'upcoming',
+                    notificationEnabled: match.notificationEnabled || false
+                })
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to save match');
+            }
+            
+            const data = await response.json();
+            return {
+                success: true,
+                message: data.message || 'Match saved successfully!',
+                data: data.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message || 'Failed to save match. Please try again.',
+                error: error
+            };
+        }
+    },
+    
+    async getMatches(userId = null) {
+        try {
+            const url = userId 
+                ? `${this.baseURL}/api/matches?userId=${userId}`
+                : `${this.baseURL}/api/matches`;
+            
+            const response = await fetch(url, {
+                method: 'GET',
+                headers: this.getAuthHeaders()
+            });
+            
+            if (!response.ok) {
+                return [];
+            }
+            
+            const data = await response.json();
+            return data.data || [];
+        } catch (error) {
+            console.error('Error getting matches:', error);
+            return [];
+        }
+    },
+    
+    async updateMatch(matchId, updates) {
+        try {
+            const response = await fetch(`${this.baseURL}/api/matches/${matchId}`, {
+                method: 'PUT',
+                headers: this.getAuthHeaders(),
+                body: JSON.stringify(updates)
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to update match');
+            }
+            
+            const data = await response.json();
+            return {
+                success: true,
+                message: data.message || 'Match updated successfully!',
+                data: data.data
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message || 'Failed to update match. Please try again.',
+                error: error
+            };
+        }
+    },
+    
+    async deleteMatch(matchId) {
+        try {
+            const response = await fetch(`${this.baseURL}/api/matches/${matchId}`, {
+                method: 'DELETE',
+                headers: this.getAuthHeaders()
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to delete match');
+            }
+            
+            const data = await response.json();
+            return {
+                success: true,
+                message: data.message || 'Match deleted successfully!'
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message || 'Failed to delete match. Please try again.',
+                error: error
+            };
+        }
+    },
+    
+    // Delete selection
+    async deleteSelection(userId, sport, category) {
+        try {
+            const url = `${this.baseURL}/api/selections/${sport}/${category}?userId=${encodeURIComponent(userId)}`;
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: this.getAuthHeaders()
+            });
+            
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.detail || 'Failed to delete selection');
+            }
+            
+            const data = await response.json();
+            return {
+                success: true,
+                message: data.message || 'Selection deleted successfully!'
+            };
+        } catch (error) {
+            return {
+                success: false,
+                message: error.message || 'Failed to delete selection. Please try again.',
+                error: error
+            };
         }
     }
 };
