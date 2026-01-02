@@ -718,33 +718,15 @@ async function loadSchedulesForSport(sport) {
 
         for (const { team, category } of allTeams) {
             try {
-
                 // Check if ScheduleLoader is available
                 if (!window.ScheduleLoader) {
-                        windowKeys: Object.keys(window).filter(k => k.toLowerCase().includes('schedule')),
-                        allScripts: Array.from(document.scripts).map(s => s.src)
-                    });
                     throw new Error('ScheduleLoader is not loaded. Please check the browser console for errors in scheduleLoader.js');
                 }
 
-                    type: typeof window.ScheduleLoader,
-                    keys: Object.keys(window.ScheduleLoader),
-                    hasLoadFunction: typeof window.ScheduleLoader.loadScheduleFromJSON === 'function',
-                    loadFunctionType: typeof window.ScheduleLoader.loadScheduleFromJSON,
-                    stringified: JSON.stringify(window.ScheduleLoader)
-                });
-
                 if (typeof window.ScheduleLoader.loadScheduleFromJSON !== 'function') {
-                        ScheduleLoaderType: typeof window.ScheduleLoader,
-                        ScheduleLoaderKeys: Object.keys(window.ScheduleLoader),
-                        ScheduleLoaderValue: window.ScheduleLoader
-                    });
                     throw new Error('ScheduleLoader.loadScheduleFromJSON is not a function. Please refresh the page.');
                 }
 
-                    hasLoadScheduleFromJSON: typeof window.ScheduleLoader.loadScheduleFromJSON === 'function',
-                    methods: Object.keys(window.ScheduleLoader)
-                });
                 const scheduleData = await window.ScheduleLoader.loadScheduleFromJSON(sport, category, team);
 
                 if (scheduleData && Array.isArray(scheduleData)) {
@@ -767,12 +749,10 @@ async function loadSchedulesForSport(sport) {
                     });
 
                     allSchedules.push(...matches);
-                    console.log(`Loaded ${matches.length} matches for ${team} (${category})`);
-                } else {
-                    console.warn(`No schedule data returned for ${team} (${category})`);
                 }
             } catch (error) {
                 console.error(`Failed to load schedule for ${team} (${category}):`, error);
+
             }
         }
 
