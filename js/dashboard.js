@@ -44,11 +44,67 @@ function setupSportFilters() {
             const sport = this.getAttribute('data-sport');
             currentSport = sport;
 
-            // Load teams and schedules for selected sport
-            loadTeamsForSport(sport);
-            loadSchedulesForSport(sport);
+            if (sport === 'saved') {
+                loadSavedMatchesView();
+            } else {
+                // Show team selection section again if hidden
+                const teamSelectionSection = document.getElementById('teamSelectionSection');
+                if (teamSelectionSection) {
+                    teamSelectionSection.style.display = '';
+                }
+                // Load teams and schedules for selected sport
+                loadTeamsForSport(sport);
+                loadSchedulesForSport(sport);
+            }
         });
     });
+}
+
+// Helper to load saved matches view
+async function loadSavedMatchesView() {
+    try {
+        // Hide team selection section completely
+        const teamSelectionSection = document.getElementById('teamSelectionSection');
+        if (teamSelectionSection) {
+            teamSelectionSection.style.display = 'none';
+        }
+
+        const scheduleContent = document.getElementById('scheduleContent');
+        scheduleContent.innerHTML = '<div class="loading-spinner">Loading saved matches...</div>';
+
+        const userId = window.Auth.getCurrentUser()?.userId;
+        if (!userId) {
+            scheduleContent.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">🔐</div>
+                    <h3>Please log in</h3>
+                    <p>Log in to view your saved matches</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Get all saved matches
+        const savedMatches = await API.getMatches(userId);
+
+        if (savedMatches.length === 0) {
+            scheduleContent.innerHTML = `
+                <div class="empty-state">
+                    <div class="empty-icon">📭</div>
+                    <h3>No saved matches</h3>
+                    <p>You haven't saved any matches yet. Go to Cricket, Football, or F1 and click the bell icon to save matches with reminders.</p>
+                </div>
+            `;
+            return;
+        }
+
+        // Display them using existing display/list logic
+        displaySchedules(savedMatches, 'saved');
+
+    } catch (error) {
+        console.error('Error loading saved matches:', error);
+        showMessage('Failed to load saved matches', 'error');
+    }
 }
 
 // Load and display teams for the selected sport
@@ -354,14 +410,24 @@ async function loadMatches() {
         updateCalendar();
 
         if (allMatches.length === 0) {
-            document.getElementById('emptyState').classList.remove('hidden');
-            document.getElementById('listView').classList.add('hidden');
+            const emptyState = document.getElementById('emptyState');
+            if (emptyState) emptyState.classList.remove('hidden');
+
+            const listView = document.getElementById('listView');
+            if (listView) listView.classList.add('hidden');
         } else {
-            document.getElementById('emptyState').classList.add('hidden');
-            document.getElementById('listView').classList.remove('hidden');
+            const emptyState = document.getElementById('emptyState');
+            if (emptyState) emptyState.classList.add('hidden');
+
+            const listView = document.getElementById('listView');
+            if (listView) listView.classList.remove('hidden');
         }
     } catch (error) {
-        showMessage('Failed to load matches', 'error');
+        console.error('Error loading matches:', error);
+        // Only show error message if it's not a DOM error
+        if (!error.message.includes('null')) {
+            showMessage('Failed to load matches', 'error');
+        }
     }
 }
 
@@ -603,13 +669,10 @@ function populateMatchForm(match) {
 }
 
 async function loadSchedulesForSport(sport) {
-    console.log('[DEBUG] loadSchedulesForSport ENTRY', { sport });
     try {
         const scheduleContent = document.getElementById('scheduleContent');
-        console.log('[DEBUG] scheduleContent element check', { found: !!scheduleContent, visible: scheduleContent ? scheduleContent.offsetParent !== null : false });
 
         if (!scheduleContent) {
-            console.error('[DEBUG] scheduleContent element not found!');
             return;
         }
 
@@ -618,7 +681,6 @@ async function loadSchedulesForSport(sport) {
 
         // Get user's favorite teams for this sport
         const userId = window.Auth.getCurrentUser()?.userId;
-        console.log('[DEBUG] userId check', { hasUserId: !!userId, userId });
         if (!userId) {
             scheduleContent.innerHTML = '<p class="no-schedules">Please log in to view schedules.</p>';
             return;
@@ -626,7 +688,6 @@ async function loadSchedulesForSport(sport) {
 
         const allUserSelections = await API.getUserSelections(userId);
         const sportSelections = allUserSelections.filter(s => s.sport === sport);
-        console.log('[DEBUG] sportSelections check', { totalSelections: allUserSelections.length, sportSelectionsCount: sportSelections.length, sportSelections });
 
         if (sportSelections.length === 0) {
             scheduleContent.innerHTML = '<p class="no-schedules">No favorite teams selected for this sport.</p>';
@@ -643,7 +704,6 @@ async function loadSchedulesForSport(sport) {
                 });
             });
         });
-        console.log('[DEBUG] allTeams collected', { allTeamsCount: allTeams.length, allTeams });
 
         if (allTeams.length === 0) {
             scheduleContent.innerHTML = '<p class="no-schedules">No teams selected.</p>';
@@ -652,20 +712,21 @@ async function loadSchedulesForSport(sport) {
 
         // Load schedules for all teams
         const allSchedules = [];
+
+        // Fetch fresh list of saved matches to check status
+        const savedMatches = await API.getMatches(userId);
+
         for (const { team, category } of allTeams) {
             try {
-                console.log('[DEBUG] BEFORE API call', { sport, category, team });
 
                 // Check if ScheduleLoader is available
                 if (!window.ScheduleLoader) {
-                    console.error('[DEBUG] ScheduleLoader not found on window!', {
                         windowKeys: Object.keys(window).filter(k => k.toLowerCase().includes('schedule')),
                         allScripts: Array.from(document.scripts).map(s => s.src)
                     });
                     throw new Error('ScheduleLoader is not loaded. Please check the browser console for errors in scheduleLoader.js');
                 }
 
-                console.log('[DEBUG] Inspecting ScheduleLoader:', {
                     type: typeof window.ScheduleLoader,
                     keys: Object.keys(window.ScheduleLoader),
                     hasLoadFunction: typeof window.ScheduleLoader.loadScheduleFromJSON === 'function',
@@ -674,7 +735,6 @@ async function loadSchedulesForSport(sport) {
                 });
 
                 if (typeof window.ScheduleLoader.loadScheduleFromJSON !== 'function') {
-                    console.error('[DEBUG] ScheduleLoader.loadScheduleFromJSON is not a function!', {
                         ScheduleLoaderType: typeof window.ScheduleLoader,
                         ScheduleLoaderKeys: Object.keys(window.ScheduleLoader),
                         ScheduleLoaderValue: window.ScheduleLoader
@@ -682,38 +742,46 @@ async function loadSchedulesForSport(sport) {
                     throw new Error('ScheduleLoader.loadScheduleFromJSON is not a function. Please refresh the page.');
                 }
 
-                console.log('[DEBUG] ScheduleLoader is available', {
                     hasLoadScheduleFromJSON: typeof window.ScheduleLoader.loadScheduleFromJSON === 'function',
                     methods: Object.keys(window.ScheduleLoader)
                 });
                 const scheduleData = await window.ScheduleLoader.loadScheduleFromJSON(sport, category, team);
-                console.log('[DEBUG] AFTER API call', { sport, category, team, hasData: !!scheduleData, isArray: Array.isArray(scheduleData), dataLength: scheduleData?.length || 0, sampleData: scheduleData?.[0] });
 
                 if (scheduleData && Array.isArray(scheduleData)) {
-                    console.log('[DEBUG] BEFORE convertToMatches', { sport, category, team, dataLength: scheduleData.length });
                     // Convert JSON data to match format
                     const matches = window.ScheduleLoader.convertToMatches(scheduleData, sport, category, team);
-                    console.log('[DEBUG] AFTER convertToMatches', { sport, category, team, matchesCount: matches.length, sampleMatch: matches[0] });
+
+                    // Check each match against saved matches
+                    matches.forEach(match => {
+                        const savedMatch = savedMatches.find(m =>
+                            m.date === match.date &&
+                            (m.team1 === match.team1 || m.team2 === match.team1) &&
+                            (m.team1 === match.team2 || m.team2 === match.team2)
+                        );
+
+                        if (savedMatch) {
+                            match.id = savedMatch.id;
+                            match.saved = true;
+                            match.notificationEnabled = savedMatch.notificationEnabled || false;
+                        }
+                    });
+
                     allSchedules.push(...matches);
                     console.log(`Loaded ${matches.length} matches for ${team} (${category})`);
                 } else {
                     console.warn(`No schedule data returned for ${team} (${category})`);
                 }
             } catch (error) {
-                console.error('[DEBUG] API call error', { sport, category, team, error: error.message, stack: error.stack });
                 console.error(`Failed to load schedule for ${team} (${category}):`, error);
             }
         }
 
-        console.log('[DEBUG] BEFORE displaySchedules', { allSchedulesCount: allSchedules.length, sampleSchedules: allSchedules.slice(0, 2) });
         console.log(`Total schedules loaded: ${allSchedules.length}`);
 
         // Display schedules in list format
         displaySchedules(allSchedules, sport);
-        console.log('[DEBUG] loadSchedulesForSport EXIT', { sport, allSchedulesCount: allSchedules.length });
 
     } catch (error) {
-        console.error('[DEBUG] loadSchedulesForSport ERROR', { sport, error: error.message, stack: error.stack });
         console.error('Error loading schedules:', error);
         const scheduleContent = document.getElementById('scheduleContent');
         scheduleContent.innerHTML = `<p class="no-schedules">Error loading schedules: ${error.message}</p>`;
@@ -722,18 +790,14 @@ async function loadSchedulesForSport(sport) {
 }
 
 function displaySchedules(schedules, sport) {
-    console.log('[DEBUG] displaySchedules ENTRY', { schedulesCount: schedules?.length || 0, sport });
     const scheduleContent = document.getElementById('scheduleContent');
 
     if (!scheduleContent) {
-        console.error('[DEBUG] scheduleContent NOT FOUND');
         console.error('Schedule content element not found');
         return;
     }
-    console.log('[DEBUG] scheduleContent element state', { found: true, visible: scheduleContent.offsetParent !== null, parentVisible: scheduleContent.parentElement?.offsetParent !== null });
 
     if (!schedules || schedules.length === 0) {
-        console.log('[DEBUG] No schedules to display', { schedulesCount: 0 });
         scheduleContent.innerHTML = '<p class="no-schedules">No schedules available for your favorite teams.</p>';
         return;
     }
@@ -759,17 +823,21 @@ function displaySchedules(schedules, sport) {
     let itemsCreated = 0;
     schedules.forEach(match => {
         try {
+            // For saved view, ensure 'saved' property is true and 'notificationEnabled' is respected
+            if (sport === 'saved') {
+                match.saved = true;
+                // db matches might have 'notificationEnabled' set, ensure it's passed
+            }
+
             const listItem = createScheduleListItem(match);
             scheduleList.appendChild(listItem);
             itemsCreated++;
         } catch (error) {
-            console.error('[DEBUG] Error creating list item', { error: error.message, match });
             console.error('Error creating schedule list item:', error, match);
         }
     });
 
     scheduleContent.appendChild(scheduleList);
-    console.log('[DEBUG] displaySchedules EXIT', { schedulesCount: schedules.length, itemsCreated, listItemCount: scheduleList.children.length });
 }
 
 function createScheduleListItem(match) {
@@ -921,24 +989,36 @@ function createScheduleListItem(match) {
         `;
     }
 
+    const isSaved = match.saved;
+    const notificationActive = match.notificationEnabled;
+    const bellClass = notificationActive ? 'active' : '';
+    const bellTitle = notificationActive ? 'Turn off reminder' : 'Set reminder';
+
+    // SVG Icons
+    const bellIconSvg = notificationActive
+        ? `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`
+        : `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`;
+
     li.innerHTML = innerHTML + `
             <div class="schedule-item-actions">
                 <span class="schedule-status-badge" style="background-color: ${statusColor}">
                     ${status.charAt(0).toUpperCase() + status.slice(1)}
                 </span>
-                <button class="save-schedule-btn-small" data-match='${JSON.stringify(match).replace(/'/g, "&apos;")}'>
-                    <span class="save-icon">💾</span> Save
+                <button class="reminder-btn ${bellClass}" data-match='${JSON.stringify(match).replace(/'/g, "&apos;")}' title="${bellTitle}">
+                    ${bellIconSvg}
                 </button>
             </div>
         </div>
     `;
 
-    // Add event listener to save button
-    const saveBtn = li.querySelector('.save-schedule-btn-small');
-    saveBtn.addEventListener('click', async function () {
-        const matchData = JSON.parse(this.getAttribute('data-match'));
-        await saveScheduleMatch(matchData);
-    });
+    // Add event listener to reminder button
+    const reminderBtn = li.querySelector('.reminder-btn');
+    if (reminderBtn) {
+        reminderBtn.addEventListener('click', async function () {
+            const matchData = JSON.parse(this.getAttribute('data-match'));
+            await toggleScheduleNotification(matchData, this);
+        });
+    }
 
     return li;
 }
@@ -985,8 +1065,85 @@ function showMessage(text, type = 'success') {
     }, 3000);
 }
 
+async function toggleScheduleNotification(match, btnElement) {
+    try {
+        // If match is not saved yet, save it first with notification enabled
+        if (!match.saved) {
+            const matchToSave = {
+                sport: match.sport || currentSport,
+                category: match.category || null,
+                team1: match.team1 || 'TBA',
+                team2: match.team2 || 'TBA',
+                date: match.date,
+                time: match.time || '00:00',
+                venue: match.venue || 'TBA',
+                league: match.league || match.tournament || 'TBA',
+                status: 'upcoming',
+                notificationEnabled: true
+            };
+
+            const response = await API.saveMatch(matchToSave);
+            if (response.success) {
+                // Update match object with saved data
+                match.id = response.data.id;
+                match.saved = true;
+                match.notificationEnabled = true;
+
+                // Update UI
+                if (btnElement) {
+                    const activeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`;
+                    btnElement.innerHTML = activeSvg;
+                    btnElement.classList.add('active');
+                    btnElement.title = 'Turn off reminder';
+                    btnElement.setAttribute('data-match', JSON.stringify(match));
+                }
+
+                Notifications.scheduleMatchNotification(match.id);
+                showMessage('Match saved with reminder', 'success');
+            } else {
+                showMessage(response.message || 'Failed to save match', 'error');
+            }
+            return;
+        }
+
+        // Match is already saved, toggle notification
+        const newStatus = !match.notificationEnabled;
+        await API.updateMatch(match.id, { notificationEnabled: newStatus });
+
+        // Update local object
+        match.notificationEnabled = newStatus;
+
+        // Update UI
+        if (btnElement) {
+            // SVG Icons
+            const activeSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`;
+            const inactiveSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>`;
+
+            btnElement.innerHTML = newStatus ? activeSvg : inactiveSvg;
+            btnElement.title = newStatus ? 'Turn off reminder' : 'Set reminder';
+
+            if (newStatus) {
+                btnElement.classList.add('active');
+                Notifications.scheduleMatchNotification(match.id);
+                showMessage('Reminder set', 'success');
+            } else {
+                btnElement.classList.remove('active');
+                Notifications.cancelNotification(match.id);
+                showMessage('Reminder cancelled', 'info');
+            }
+
+            // Update data attribute
+            btnElement.setAttribute('data-match', JSON.stringify(match));
+        }
+    } catch (error) {
+        console.error('Error toggling notification:', error);
+        showMessage('Failed to update reminder', 'error');
+    }
+}
+
 // Export functions for use in other files
 window.openMatchModal = openMatchModal;
 window.editMatch = editMatch;
 window.deleteMatch = deleteMatch;
+window.deleteTeamFromSelection = deleteTeamFromSelection;
 

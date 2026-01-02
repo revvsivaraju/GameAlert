@@ -381,11 +381,52 @@
     gap: 8px;
 }
 
-.save-schedule-btn-small:hover {
+.save-schedule-btn-small:not(.saved):hover {
     background: linear-gradient(135deg, var(--primary), var(--secondary));
     border-color: transparent;
     color: black;
     transform: translateY(-2px);
+}
+
+.save-schedule-btn-small.saved {
+    background: rgba(76, 175, 80, 0.2);
+    border-color: rgba(76, 175, 80, 0.4);
+    color: #4CAF50;
+    cursor: default;
+}
+
+.reminder-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+}
+
+.reminder-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+}
+
+.reminder-btn.active {
+    color: #FFD700;
+}
+
+.reminder-btn.active:hover {
+    background: rgba(255, 215, 0, 0.1);
+}
+
+/* Remove old save button styles if not used elsewhere, or keep for other parts of the app */
+.save-schedule-btn-small {
+    /* Keeping this if needed for other sports or legacy matches, but hiding it in schedule list via JS removal */
+    display: none;
 }
 
 .no-schedules,
@@ -394,6 +435,34 @@
     padding: 60px 20px;
     color: var(--text-secondary);
     font-size: 1.1rem;
+}
+
+/* Empty State */
+.empty-state {
+    text-align: center;
+    padding: 80px 40px;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 16px;
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.empty-state .empty-icon {
+    font-size: 4rem;
+    margin-bottom: 20px;
+    opacity: 0.8;
+}
+
+.empty-state h3 {
+    font-size: 1.5rem;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.empty-state p {
+    color: var(--text-secondary);
+    max-width: 400px;
+    margin: 0 auto;
+    line-height: 1.6;
 }
 
 /* Notifications */

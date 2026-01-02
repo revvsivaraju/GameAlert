@@ -120,7 +120,13 @@ const API = {
     async saveMatch(match) {
         try {
             const userId = this.getUserId();
-            const response = await fetch(`${this.baseURL}/api/matches`, {
+            // Build URL with userId query parameter
+            let url = `${this.baseURL}/api/matches`;
+            if (userId) {
+                url += `?userId=${encodeURIComponent(userId)}`;
+            }
+
+            const response = await fetch(url, {
                 method: 'POST',
                 headers: this.getAuthHeaders(),
                 body: JSON.stringify({

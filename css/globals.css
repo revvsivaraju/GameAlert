@@ -1,21 +1,27 @@
 /* Global Design System - Minimal & Futuristic */
 :root {
     /* Color Palette - Cyberpunk/Futuristic */
-    --primary: #00f2fe; /* Cyan */
-    --secondary: #4facfe; /* Blue */
-    --accent: #ff0055; /* Neon Pink */
-    --background: #0a0a0a; /* Almost Black */
-    --surface: #121212; /* Dark Gray */
-    --surface-light: #1e1e1e; /* Lighter Gray */
+    --primary: #00f2fe;
+    /* Cyan */
+    --secondary: #4facfe;
+    /* Blue */
+    --accent: #ff0055;
+    /* Neon Pink */
+    --background: #0a0a0a;
+    /* Almost Black */
+    --surface: #121212;
+    /* Dark Gray */
+    --surface-light: #1e1e1e;
+    /* Lighter Gray */
     --text-primary: #ffffff;
     --text-secondary: #b3b3b3;
     --success: #00ff9d;
     --error: #ff4d4d;
-    
+
     /* Typography */
     --font-heading: 'Outfit', 'Segoe UI', sans-serif;
     --font-body: 'Inter', 'Segoe UI', sans-serif;
-    
+
     /* Spacing & Borders */
     --border-radius: 16px;
     --spacing-xs: 4px;
@@ -23,7 +29,7 @@
     --spacing-md: 16px;
     --spacing-lg: 24px;
     --spacing-xl: 32px;
-    
+
     /* Effects */
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
@@ -46,12 +52,17 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     overflow-x: hidden;
-    background-image: 
+    background-image:
         radial-gradient(circle at 10% 20%, rgba(79, 172, 254, 0.1) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(255, 0, 85, 0.05) 0%, transparent 40%);
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--font-heading);
     font-weight: 700;
     letter-spacing: -0.02em;
@@ -139,10 +150,22 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Animations */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .animate-fade-in {
     animation: fadeIn 0.6s ease-out forwards;
+}
+
+/* Utility Classes */
+.hidden {
+    display: none !important;
 }

@@ -7,18 +7,22 @@
 ehthumbs.db
 Thumbs.db
 
+# Security - Never commit credentials!
+*accessKeys*.csv
+
 # Editor files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
+.cursor/
 
 # Logs
 *.log
 npm-debug.log*
 
-# Dependencies (if any are added later)
+# Dependencies
 node_modules/
 
 # Build files
@@ -34,8 +38,5 @@ __pycache__/
 venv/
 env/
 ENV/
-.venv
-
-# FastAPI
-*.log
-
+.venv/
+backend/venv/

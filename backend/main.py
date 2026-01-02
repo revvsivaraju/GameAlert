@@ -50,9 +50,28 @@ class MatchUpdate(BaseModel):
     status: Optional[str] = None
     notificationEnabled: Optional[bool] = None
 
-# In-memory storage (replace with database in production)
+# In-memory storage (fallback when DynamoDB is not configured)
 selections_db = []
 matches_db = []
+
+# DynamoDB configuration - set to True when AWS is configured
+USE_DYNAMODB = False
+
+# Try to import DynamoDB manager
+try:
+    from dynamodb_manager import db as dynamodb
+    from aws_config import AWS_CONFIG
+    # Only enable if credentials are configured (not empty)
+    if AWS_CONFIG['access_key_id'] and AWS_CONFIG['secret_access_key']:
+        USE_DYNAMODB = True
+        print("✅ DynamoDB enabled")
+    else:
+        print("⚠️ AWS credentials not set, using in-memory storage")
+        print("   Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY environment variables")
+except ImportError as e:
+    print(f"⚠️ DynamoDB module not available: {e}")
+except Exception as e:
+    print(f"⚠️ Error loading DynamoDB: {e}")
 
 # Helper function to get schedule file path (JSON only)
 def get_schedule_file_path(sport: str, category: str, team: str) -> Optional[Path]:
@@ -66,8 +85,6 @@ def get_schedule_file_path(sport: str, category: str, team: str) -> Optional[Pat
     category_folder = category.capitalize() if category else ""
     
     # Debug logging
-    print(f"[DEBUG] Looking for schedule: sport={sport}, category={category}, team={team}")
-    print(f"[DEBUG] Project root: {project_root}")
     
     # Construct the file path based on naming convention: {Team}_Schedule.json
     # Replace spaces with underscores in team name
@@ -79,11 +96,9 @@ def get_schedule_file_path(sport: str, category: str, team: str) -> Optional[Pat
     else:
         schedule_path = project_root / f"Schedules/{sport_folder}/{team_filename}"
     
-    print(f"[DEBUG] Looking for file: {schedule_path}")
     
     # Check if the file exists
     if schedule_path.exists():
-        print(f"[DEBUG] Found schedule file: {schedule_path}")
         return schedule_path
     
     # FALLBACK: Try looking in subdirectories (old structure)
@@ -96,10 +111,8 @@ def get_schedule_file_path(sport: str, category: str, team: str) -> Optional[Pat
     if team_dir.exists():
         json_files = list(team_dir.glob("*.json"))
         if json_files:
-            print(f"[DEBUG] Found schedule in subdirectory: {json_files[0]}")
             return json_files[0]
 
-    print(f"[DEBUG] Schedule file not found for {sport}/{category}/{team}")
     return None
 
 # Helper function to parse JSON schedule
@@ -225,51 +238,59 @@ async def save_selection(selection: SelectionRequest, userId: Optional[str] = Qu
     """Save user selections - updates existing if found, otherwise creates new"""
     from datetime import datetime
     
-    # Check if selection already exists for this userId + sport + category
-    existing_index = None
-    for i, existing in enumerate(selections_db):
-        if (existing.get("userId") == userId and 
-            existing.get("sport") == selection.sport and 
-            existing.get("category") == selection.category):
-            existing_index = i
-            break
-    
     selection_data = {
-        "userId": userId,
         "sport": selection.sport,
         "category": selection.category,
-        "selections": selection.selections,
-        "timestamp": datetime.now().isoformat()
+        "selections": selection.selections
     }
     
-    if existing_index is not None:
-        # Update existing selection
-        selections_db[existing_index] = selection_data
-        return {"success": True, "message": "Selections updated successfully", "data": selection_data}
+    if USE_DYNAMODB:
+        result = dynamodb.save_selection(selection_data, userId)
+        return {"success": True, "message": "Selections saved successfully", "data": result}
     else:
-        # Create new selection
-        selections_db.append(selection_data)
-        return {"success": True, "message": "Selections saved successfully", "data": selection_data}
+        # In-memory fallback
+        existing_index = None
+        for i, existing in enumerate(selections_db):
+            if (existing.get("userId") == userId and 
+                existing.get("sport") == selection.sport and 
+                existing.get("category") == selection.category):
+                existing_index = i
+                break
+        
+        selection_data["userId"] = userId
+        selection_data["timestamp"] = datetime.now().isoformat()
+        
+        if existing_index is not None:
+            selections_db[existing_index] = selection_data
+            return {"success": True, "message": "Selections updated successfully", "data": selection_data}
+        else:
+            selections_db.append(selection_data)
+            return {"success": True, "message": "Selections saved successfully", "data": selection_data}
 
 @app.get("/api/selections")
 async def get_selections(userId: Optional[str] = Query(None)):
     """Get user selections"""
-    if userId:
-        user_selections = [s for s in selections_db if s.get("userId") == userId]
+    if USE_DYNAMODB:
+        user_selections = dynamodb.get_selections(userId)
     else:
-        user_selections = [s for s in selections_db if not s.get("userId")]
+        if userId:
+            user_selections = [s for s in selections_db if s.get("userId") == userId]
+        else:
+            user_selections = [s for s in selections_db if not s.get("userId")]
     return {"success": True, "data": user_selections}
 
 @app.get("/api/selections/{sport}")
 async def get_selections_by_sport(sport: str, userId: Optional[str] = Query(None)):
     """Get selections for a specific sport"""
-    all_selections = selections_db
-    if userId:
-        all_selections = [s for s in all_selections if s.get("userId") == userId]
+    if USE_DYNAMODB:
+        filtered = dynamodb.get_selections_by_sport(sport, userId)
     else:
-        all_selections = [s for s in all_selections if not s.get("userId")]
-    
-    filtered = [s for s in all_selections if s.get("sport") == sport]
+        all_selections = selections_db
+        if userId:
+            all_selections = [s for s in all_selections if s.get("userId") == userId]
+        else:
+            all_selections = [s for s in all_selections if not s.get("userId")]
+        filtered = [s for s in all_selections if s.get("sport") == sport]
     return {"success": True, "data": filtered}
 
 @app.delete("/api/selections/{sport}/{category}")
@@ -277,17 +298,23 @@ async def delete_selection(sport: str, category: str, userId: Optional[str] = Qu
     """Delete a selection"""
     global selections_db
     
-    # Find and remove the selection
-    initial_length = len(selections_db)
-    selections_db = [
-        s for s in selections_db 
-        if not (s.get("userId") == userId and s.get("sport") == sport and s.get("category") == category)
-    ]
-    
-    if len(selections_db) < initial_length:
-        return {"success": True, "message": "Selection deleted successfully"}
+    if USE_DYNAMODB:
+        success = dynamodb.delete_selection(sport, category, userId)
+        if success:
+            return {"success": True, "message": "Selection deleted successfully"}
+        else:
+            raise HTTPException(status_code=404, detail="Selection not found")
     else:
-        raise HTTPException(status_code=404, detail="Selection not found")
+        initial_length = len(selections_db)
+        selections_db = [
+            s for s in selections_db 
+            if not (s.get("userId") == userId and s.get("sport") == sport and s.get("category") == category)
+        ]
+        
+        if len(selections_db) < initial_length:
+            return {"success": True, "message": "Selection deleted successfully"}
+        else:
+            raise HTTPException(status_code=404, detail="Selection not found")
 
 # Match endpoints
 @app.post("/api/matches")
@@ -297,8 +324,6 @@ async def save_match(match: MatchRequest, userId: Optional[str] = Query(None)):
     from datetime import datetime
     
     match_data = {
-        "id": f"match_{uuid.uuid4().hex[:12]}",
-        "userId": userId,
         "sport": match.sport,
         "category": match.category,
         "team1": match.team1,
@@ -308,27 +333,41 @@ async def save_match(match: MatchRequest, userId: Optional[str] = Query(None)):
         "venue": match.venue,
         "league": match.league,
         "status": match.status,
-        "notificationEnabled": match.notificationEnabled,
-        "saved": True,
-        "createdAt": datetime.now().isoformat(),
-        "updatedAt": datetime.now().isoformat()
+        "notificationEnabled": match.notificationEnabled
     }
-    matches_db.append(match_data)
-    return {"success": True, "message": "Match saved successfully", "data": match_data}
+    
+    if USE_DYNAMODB:
+        result = dynamodb.save_match(match_data, userId)
+        return {"success": True, "message": "Match saved successfully", "data": result}
+    else:
+        match_data["id"] = f"match_{uuid.uuid4().hex[:12]}"
+        match_data["userId"] = userId
+        match_data["saved"] = True
+        match_data["createdAt"] = datetime.now().isoformat()
+        match_data["updatedAt"] = datetime.now().isoformat()
+        matches_db.append(match_data)
+        return {"success": True, "message": "Match saved successfully", "data": match_data}
 
 @app.get("/api/matches")
 async def get_matches(userId: Optional[str] = Query(None)):
     """Get all matches for a user"""
-    if userId:
-        user_matches = [m for m in matches_db if m.get("userId") == userId]
+    if USE_DYNAMODB:
+        user_matches = dynamodb.get_matches(userId)
     else:
-        user_matches = [m for m in matches_db if not m.get("userId")]
+        if userId:
+            user_matches = [m for m in matches_db if m.get("userId") == userId]
+        else:
+            user_matches = [m for m in matches_db if not m.get("userId")]
     return {"success": True, "data": user_matches}
 
 @app.get("/api/matches/{match_id}")
 async def get_match(match_id: str):
     """Get a specific match"""
-    match = next((m for m in matches_db if m.get("id") == match_id), None)
+    if USE_DYNAMODB:
+        match = dynamodb.get_match(match_id)
+    else:
+        match = next((m for m in matches_db if m.get("id") == match_id), None)
+    
     if not match:
         raise HTTPException(status_code=404, detail="Match not found")
     return {"success": True, "data": match}
@@ -338,28 +377,42 @@ async def update_match(match_id: str, updates: MatchUpdate):
     """Update a match"""
     from datetime import datetime
     
-    match = next((m for m in matches_db if m.get("id") == match_id), None)
-    if not match:
-        raise HTTPException(status_code=404, detail="Match not found")
-    
-    # Update fields
     update_dict = updates.dict(exclude_unset=True)
-    match.update(update_dict)
-    match["updatedAt"] = datetime.now().isoformat()
     
-    return {"success": True, "message": "Match updated successfully", "data": match}
+    if USE_DYNAMODB:
+        result = dynamodb.update_match(match_id, update_dict)
+        if result:
+            return {"success": True, "message": "Match updated successfully", "data": result}
+        else:
+            raise HTTPException(status_code=404, detail="Match not found")
+    else:
+        match = next((m for m in matches_db if m.get("id") == match_id), None)
+        if not match:
+            raise HTTPException(status_code=404, detail="Match not found")
+        
+        match.update(update_dict)
+        match["updatedAt"] = datetime.now().isoformat()
+        return {"success": True, "message": "Match updated successfully", "data": match}
 
 @app.delete("/api/matches/{match_id}")
 async def delete_match(match_id: str):
     """Delete a match"""
     global matches_db
-    initial_count = len(matches_db)
-    matches_db = [m for m in matches_db if m.get("id") != match_id]
     
-    if len(matches_db) == initial_count:
-        raise HTTPException(status_code=404, detail="Match not found")
-    
-    return {"success": True, "message": "Match deleted successfully"}
+    if USE_DYNAMODB:
+        success = dynamodb.delete_match(match_id)
+        if success:
+            return {"success": True, "message": "Match deleted successfully"}
+        else:
+            raise HTTPException(status_code=404, detail="Match not found")
+    else:
+        initial_count = len(matches_db)
+        matches_db = [m for m in matches_db if m.get("id") != match_id]
+        
+        if len(matches_db) == initial_count:
+            raise HTTPException(status_code=404, detail="Match not found")
+        
+        return {"success": True, "message": "Match deleted successfully"}
 
 # Mount static files (serve frontend) - must be after API routes
 static_path = Path(__file__).parent.parent
