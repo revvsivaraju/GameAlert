@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Your Favorites</title>
+    <link rel="stylesheet" href="css/selection.css">
+</head>
+<body>
+    <div class="selection-container">
+        <header class="selection-header">
+            <button class="back-button" onclick="window.location.href='index.html'">
+                <span class="back-arrow">←</span> Back
+            </button>
+            <h1 class="selection-title" id="sportTitle">Select Your Favorites</h1>
+            <p class="selection-subtitle" id="sportSubtitle">Choose the teams or countries you want to follow</p>
+        </header>
+        
+        <div class="selection-content">
+            <div class="options-grid" id="optionsGrid">
+                <!-- Options will be dynamically loaded here -->
+            </div>
+            
+            <div class="selection-actions">
+                <button class="save-button" id="saveButton">
+                    <span class="save-icon">💾</span>
+                    Save Selections
+                </button>
+                <div class="selected-count" id="selectedCount">0 selected</div>
+            </div>
+        </div>
+        
+        <div class="message" id="message"></div>
+    </div>
+    
+    <script src="js/api.js"></script>
+    <script src="js/selection.js"></script>
+</body>
+</html>
+
