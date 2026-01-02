@@ -1,0 +1,29 @@
+[
+    {
+        "date": "2026-04-05",
+        "time": "19:30",
+        "team(home)": "Mumbai Indians",
+        "opponent(away)": "Chennai Super Kings",
+        "location": "Wankhede Stadium, Mumbai",
+        "series": "IPL 2026",
+        "format": "T20"
+    },
+    {
+        "date": "2026-04-10",
+        "time": "15:30",
+        "team(home)": "Royal Challengers Bangalore",
+        "opponent(away)": "Mumbai Indians",
+        "location": "M. Chinnaswamy Stadium, Bangalore",
+        "series": "IPL 2026",
+        "format": "T20"
+    },
+    {
+        "date": "2026-04-15",
+        "time": "19:30",
+        "team(home)": "Mumbai Indians",
+        "opponent(away)": "Kolkata Knight Riders",
+        "location": "Wankhede Stadium, Mumbai",
+        "series": "IPL 2026",
+        "format": "T20"
+    }
+]

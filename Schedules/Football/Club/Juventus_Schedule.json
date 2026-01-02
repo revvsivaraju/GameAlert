@@ -1,0 +1,20 @@
+[
+    {
+        "date": "2026-02-15",
+        "time": "15:00",
+        "team(home)": "Juventus",
+        "opponent(away)": "TBD",
+        "location": "Home Stadium",
+        "competition": "League",
+        "matchday": "Sample Match 1"
+    },
+    {
+        "date": "2026-02-22",
+        "time": "18:00",
+        "team(home)": "TBD",
+        "opponent(away)": "Juventus",
+        "location": "Away Stadium",
+        "competition": "League",
+        "matchday": "Sample Match 2"
+    }
+]

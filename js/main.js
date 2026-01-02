@@ -1,35 +1,35 @@
 // Add click event listeners to sport boxes and handle auth state
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Check authentication state
     checkAuthState();
-    
+
     // Setup sport box click handlers
-    const sportBoxes = document.querySelectorAll('.sport-box');
-    
+    const sportBoxes = document.querySelectorAll('.sport-card');
+
     sportBoxes.forEach(box => {
-        box.addEventListener('click', function() {
+        box.addEventListener('click', function () {
             const sport = this.getAttribute('data-sport');
-            // Navigate to selection page with sport parameter
-            window.location.href = `selection.html?sport=${sport}`;
+            // Navigate to dashboard with sport parameter
+            window.location.href = `dashboard.html?sport=${sport}`;
         });
-        
+
         // Add keyboard accessibility
         box.setAttribute('tabindex', '0');
         box.setAttribute('role', 'button');
-        box.setAttribute('aria-label', `Select ${box.querySelector('.sport-title').textContent}`);
-        
-        box.addEventListener('keypress', function(e) {
+        box.setAttribute('aria-label', `Select ${box.querySelector('h3').textContent}`);
+
+        box.addEventListener('keypress', function (e) {
             if (e.key === 'Enter' || e.key === ' ') {
                 e.preventDefault();
                 this.click();
             }
         });
     });
-    
+
     // Setup logout button
     const logoutButton = document.getElementById('logoutButton');
     if (logoutButton) {
-        logoutButton.addEventListener('click', function() {
+        logoutButton.addEventListener('click', function () {
             if (window.Auth && window.Auth.logout) {
                 window.Auth.logout();
             }
@@ -57,7 +57,7 @@ function updateAuthUI() {
     const userInfo = document.getElementById('userInfo');
     const loginButton = document.getElementById('loginButton');
     const userName = document.getElementById('userName');
-    
+
     if (window.Auth && window.Auth.isAuthenticated()) {
         const user = window.Auth.getCurrentUser();
         if (user) {

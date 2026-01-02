@@ -1,0 +1,128 @@
+[
+  {
+    "date": "2026-03-22",
+    "time": "7:30 PM IST",
+    "team(home)": "Chennai Super Kings",
+    "opponent(away)": "Royal Challengers Bangalore",
+    "location": "M. A. Chidambaram Stadium, Chennai",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-23",
+    "time": "3:30 PM IST",
+    "team(home)": "Punjab Kings",
+    "opponent(away)": "Delhi Capitals",
+    "location": "Maharaja Yadavindra Singh International Cricket Stadium, Mullanpur",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-23",
+    "time": "7:30 PM IST",
+    "team(home)": "Kolkata Knight Riders",
+    "opponent(away)": "Sunrisers Hyderabad",
+    "location": "Eden Gardens, Kolkata",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-24",
+    "time": "3:30 PM IST",
+    "team(home)": "Rajasthan Royals",
+    "opponent(away)": "Lucknow Super Giants",
+    "location": "Sawai Mansingh Stadium, Jaipur",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-24",
+    "time": "7:30 PM IST",
+    "team(home)": "Gujarat Titans",
+    "opponent(away)": "Mumbai Indians",
+    "location": "Narendra Modi Stadium, Ahmedabad",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-25",
+    "time": "7:30 PM IST",
+    "team(home)": "Royal Challengers Bangalore",
+    "opponent(away)": "Punjab Kings",
+    "location": "M. Chinnaswamy Stadium, Bengaluru",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-26",
+    "time": "7:30 PM IST",
+    "team(home)": "Chennai Super Kings",
+    "opponent(away)": "Gujarat Titans",
+    "location": "M. A. Chidambaram Stadium, Chennai",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-27",
+    "time": "7:30 PM IST",
+    "team(home)": "Sunrisers Hyderabad",
+    "opponent(away)": "Mumbai Indians",
+    "location": "Rajiv Gandhi International Cricket Stadium, Hyderabad",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-28",
+    "time": "7:30 PM IST",
+    "team(home)": "Rajasthan Royals",
+    "opponent(away)": "Delhi Capitals",
+    "location": "Sawai Mansingh Stadium, Jaipur",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-29",
+    "time": "7:30 PM IST",
+    "team(home)": "Royal Challengers Bangalore",
+    "opponent(away)": "Kolkata Knight Riders",
+    "location": "M. Chinnaswamy Stadium, Bengaluru",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-30",
+    "time": "7:30 PM IST",
+    "team(home)": "Lucknow Super Giants",
+    "opponent(away)": "Punjab Kings",
+    "location": "Bharat Ratna Shri Atal Bihari Vajpayee Ekana Cricket Stadium, Lucknow",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-31",
+    "time": "3:30 PM IST",
+    "team(home)": "Gujarat Titans",
+    "opponent(away)": "Sunrisers Hyderabad",
+    "location": "Narendra Modi Stadium, Ahmedabad",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-03-31",
+    "time": "7:30 PM IST",
+    "team(home)": "Delhi Capitals",
+    "opponent(away)": "Chennai Super Kings",
+    "location": "Dr. Y.S. Rajasekhara Reddy ACA-VDCA Cricket Stadium, Visakhapatnam",
+    "series": "IPL 2026",
+    "format": "T20"
+  },
+  {
+    "date": "2026-04-01",
+    "time": "7:30 PM IST",
+    "team(home)": "Mumbai Indians",
+    "opponent(away)": "Rajasthan Royals",
+    "location": "Wankhede Stadium, Mumbai",
+    "series": "IPL 2026",
+    "format": "T20"
+  }
+]

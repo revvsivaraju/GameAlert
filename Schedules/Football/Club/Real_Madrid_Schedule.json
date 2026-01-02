@@ -1,0 +1,29 @@
+[
+    {
+        "date": "2026-02-15",
+        "time": "15:00",
+        "team(home)": "Real Madrid",
+        "opponent(away)": "Barcelona",
+        "location": "Santiago Bernabéu, Madrid",
+        "competition": "La Liga",
+        "matchday": "Matchday 24"
+    },
+    {
+        "date": "2026-02-22",
+        "time": "20:00",
+        "team(home)": "Atletico Madrid",
+        "opponent(away)": "Real Madrid",
+        "location": "Wanda Metropolitano, Madrid",
+        "competition": "La Liga",
+        "matchday": "Matchday 25"
+    },
+    {
+        "date": "2026-03-01",
+        "time": "18:30",
+        "team(home)": "Real Madrid",
+        "opponent(away)": "Sevilla",
+        "location": "Santiago Bernabéu, Madrid",
+        "competition": "La Liga",
+        "matchday": "Matchday 26"
+    }
+]

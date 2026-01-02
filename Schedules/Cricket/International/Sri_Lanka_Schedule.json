@@ -1,0 +1,20 @@
+[
+    {
+        "date": "2026-02-10",
+        "time": "09:30",
+        "team(home)": "Sri Lanka",
+        "opponent(away)": "TBD",
+        "location": "Home Ground",
+        "series": "Test Series",
+        "format": "Test"
+    },
+    {
+        "date": "2026-02-20",
+        "time": "14:00",
+        "team(home)": "Sri Lanka",
+        "opponent(away)": "TBD",
+        "location": "Home Ground",
+        "series": "ODI Series",
+        "format": "ODI"
+    }
+]

@@ -1,7 +1,7 @@
 // AWS Cognito Authentication System
 const Auth = {
     userPool: null,
-    
+
     // Initialize authentication
     init() {
         // Check if config is valid
@@ -10,7 +10,7 @@ const Auth = {
             this.showMessage('AWS Cognito not configured. Please check configuration.', 'error');
             return;
         }
-        
+
         // Initialize Cognito User Pool
         try {
             this.userPool = new AmazonCognitoIdentity.CognitoUserPool({
@@ -22,11 +22,11 @@ const Auth = {
             this.showMessage('Failed to initialize authentication. Please check configuration.', 'error');
             return;
         }
-        
+
         this.setupEventListeners();
         this.checkSession();
     },
-    
+
     // Setup event listeners
     setupEventListeners() {
         // Login form submission
@@ -34,31 +34,31 @@ const Auth = {
         if (loginForm) {
             loginForm.addEventListener('submit', (e) => this.handleLogin(e));
         }
-        
+
         // Signup form submission
         const signupForm = document.getElementById('signupForm');
         if (signupForm) {
             signupForm.addEventListener('submit', (e) => this.handleSignup(e));
         }
-        
+
         // Forgot password form
         const forgotPasswordForm = document.getElementById('forgotPasswordForm');
         if (forgotPasswordForm) {
             forgotPasswordForm.addEventListener('submit', (e) => this.handleForgotPassword(e));
         }
-        
+
         // Reset password form
         const resetPasswordForm = document.getElementById('resetPasswordForm');
         if (resetPasswordForm) {
             resetPasswordForm.addEventListener('submit', (e) => this.handleResetPassword(e));
         }
-        
+
         // Email verification form
         const verifyEmailForm = document.getElementById('verifyEmailForm');
         if (verifyEmailForm) {
             verifyEmailForm.addEventListener('submit', (e) => this.handleVerifyEmail(e));
         }
-        
+
         // Toggle between login and signup
         const toggleLink = document.getElementById('toggleLink');
         if (toggleLink) {
@@ -67,7 +67,7 @@ const Auth = {
                 this.toggleForms();
             });
         }
-        
+
         // Forgot password link
         const forgotPasswordLink = document.getElementById('forgotPasswordLink');
         if (forgotPasswordLink) {
@@ -76,25 +76,25 @@ const Auth = {
                 this.showForgotPasswordForm();
             });
         }
-        
+
         // Back to login buttons
         const backToLoginFromForgot = document.getElementById('backToLoginFromForgot');
         if (backToLoginFromForgot) {
             backToLoginFromForgot.addEventListener('click', () => this.showLoginForm());
         }
-        
+
         const backToLoginFromReset = document.getElementById('backToLoginFromReset');
         if (backToLoginFromReset) {
             backToLoginFromReset.addEventListener('click', () => this.showLoginForm());
         }
-        
+
         // Resend code button
         const resendCode = document.getElementById('resendCode');
         if (resendCode) {
             resendCode.addEventListener('click', () => this.resendVerificationCode());
         }
     },
-    
+
     // Toggle between login and signup forms
     toggleForms() {
         const loginForm = document.getElementById('loginForm');
@@ -102,9 +102,9 @@ const Auth = {
         const loginTitle = document.getElementById('loginTitle');
         const loginSubtitle = document.getElementById('loginSubtitle');
         const toggleText = document.getElementById('toggleText');
-        
+
         const isLogin = loginForm && loginForm.classList.contains('active');
-        
+
         if (isLogin) {
             // Switch to signup
             this.hideAllForms();
@@ -120,7 +120,7 @@ const Auth = {
             if (loginSubtitle) loginSubtitle.textContent = 'Sign in to save your preferences';
             if (toggleText) toggleText.innerHTML = 'Don\'t have an account? <a href="#" id="toggleLink">Sign Up</a>';
         }
-        
+
         // Re-attach event listener to new toggle link
         const newToggleLink = document.getElementById('toggleLink');
         if (newToggleLink) {
@@ -129,11 +129,11 @@ const Auth = {
                 this.toggleForms();
             });
         }
-        
+
         // Clear form errors
         this.clearErrors();
     },
-    
+
     // Hide all forms
     hideAllForms() {
         const forms = ['loginForm', 'signupForm', 'forgotPasswordForm', 'resetPasswordForm', 'verifyEmailForm'];
@@ -142,7 +142,7 @@ const Auth = {
             if (form) form.classList.remove('active');
         });
     },
-    
+
     // Show login form
     showLoginForm() {
         this.hideAllForms();
@@ -150,7 +150,7 @@ const Auth = {
         if (loginForm) loginForm.classList.add('active');
         this.clearErrors();
     },
-    
+
     // Show forgot password form
     showForgotPasswordForm() {
         this.hideAllForms();
@@ -158,44 +158,44 @@ const Auth = {
         if (forgotPasswordForm) forgotPasswordForm.classList.add('active');
         this.clearErrors();
     },
-    
+
     // Handle signup
     async handleSignup(e) {
         e.preventDefault();
         this.clearErrors();
-        
+
         const name = document.getElementById('signupName').value.trim();
         const email = document.getElementById('signupEmail').value.trim();
         const password = document.getElementById('signupPassword').value;
         const confirmPassword = document.getElementById('confirmPassword').value;
-        
+
         // Validation
         if (name.length < 2) {
             this.showError('signupNameError', 'Name must be at least 2 characters');
             return;
         }
-        
+
         if (!this.validateEmail(email)) {
             this.showError('signupEmailError', 'Please enter a valid email address');
             return;
         }
-        
+
         if (password.length < 8) {
             this.showError('signupPasswordError', 'Password must be at least 8 characters');
             return;
         }
-        
+
         if (password !== confirmPassword) {
             this.showError('confirmPasswordError', 'Passwords do not match');
             return;
         }
-        
+
         // Create user attributes
         // Split name into given_name and family_name for Cognito schema
         const nameParts = name.trim().split(/\s+/);
         const givenName = nameParts[0] || name;
         const familyName = nameParts.slice(1).join(' ') || givenName; // Use givenName as fallback if no last name
-        
+
         const attributeList = [
             new AmazonCognitoIdentity.CognitoUserAttribute({
                 Name: 'email',
@@ -210,10 +210,10 @@ const Auth = {
                 Value: familyName
             })
         ];
-        
+
         // Store password temporarily for auto-login after verification
         sessionStorage.setItem('pendingPassword', password);
-        
+
         // Use email as username (User Pool configured with Email as sign-in identifier)
         // If your pool uses email alias, you would use a unique username instead
         this.userPool.signUp(email, password, attributeList, null, (err, result) => {
@@ -222,80 +222,80 @@ const Auth = {
                 this.handleCognitoError(err);
                 return;
             }
-            
+
             // Store email for verification
             sessionStorage.setItem('pendingVerificationEmail', email);
-            
+
             // Show verification form
             this.hideAllForms();
             const verifyEmailForm = document.getElementById('verifyEmailForm');
             if (verifyEmailForm) verifyEmailForm.classList.add('active');
-            
+
             this.showMessage('Account created! Please check your email for verification code.', 'success');
         });
     },
-    
+
     // Handle email verification
     async handleVerifyEmail(e) {
         e.preventDefault();
         this.clearErrors();
-        
+
         const code = document.getElementById('verificationCode').value.trim();
         const email = sessionStorage.getItem('pendingVerificationEmail');
-        
+
         if (!code) {
             this.showError('verificationCodeError', 'Please enter verification code');
             return;
         }
-        
+
         if (!email) {
             this.showMessage('Session expired. Please sign up again.', 'error');
             this.showLoginForm();
             return;
         }
-        
+
         // Create cognito user
         const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
             Username: email,
             Pool: this.userPool
         });
-        
+
         // Confirm registration
         cognitoUser.confirmRegistration(code, true, async (err, result) => {
             if (err) {
                 this.handleCognitoError(err);
                 return;
             }
-            
+
             const email = sessionStorage.getItem('pendingVerificationEmail');
             sessionStorage.removeItem('pendingVerificationEmail');
-            
+
             // Auto-login the user after verification
             this.showMessage('Email verified! Logging you in...', 'success');
-            
+
             // Get password from signup form (stored temporarily)
             const password = sessionStorage.getItem('pendingPassword');
             sessionStorage.removeItem('pendingPassword');
-            
+
             if (password) {
                 // Auto-authenticate
                 const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
                     Username: email,
                     Password: password
                 });
-                
+
                 cognitoUser.authenticateUser(authenticationDetails, {
                     onSuccess: async (authResult) => {
                         // Store tokens
                         this.storeTokens(authResult, false, email);
-                        
+
                         // Get user attributes
                         cognitoUser.getUserAttributes((err, attributes) => {
                             if (!err && attributes) {
                                 const givenNameAttr = attributes.find(attr => attr.Name === 'given_name');
                                 const familyNameAttr = attributes.find(attr => attr.Name === 'family_name');
                                 const nameAttr = attributes.find(attr => attr.Name === 'name');
-                                
+
                                 let name = email.split('@')[0];
                                 if (givenNameAttr && familyNameAttr) {
                                     name = `${givenNameAttr.Value} ${familyNameAttr.Value}`.trim();
@@ -304,13 +304,13 @@ const Auth = {
                                 } else if (nameAttr) {
                                     name = nameAttr.Value;
                                 }
-                                
+
                                 this.createSession({ email, name, userId: authResult.getIdToken().payload.sub }, false);
                             } else {
                                 this.createSession({ email, name: email.split('@')[0], userId: authResult.getIdToken().payload.sub }, false);
                             }
                         });
-                        
+
                         // Migrate temp selections (async)
                         this.migrateTempSelections().then(migratedSport => {
                             // Redirect to dashboard
@@ -354,7 +354,7 @@ const Auth = {
             }
         });
     },
-    
+
     // Migrate temporary selections to user account
     async migrateTempSelections() {
         try {
@@ -362,19 +362,19 @@ const Auth = {
             if (!tempSelections) {
                 return null; // No temp selections to migrate
             }
-            
+
             const selections = JSON.parse(tempSelections);
             if (!Array.isArray(selections) || selections.length === 0) {
                 return null;
             }
-            
+
             // Get user ID
             const user = this.getCurrentUser();
             if (!user || !user.userId) {
                 console.warn('Cannot migrate selections: user not found');
                 return null;
             }
-            
+
             // Migrate each selection
             let migratedSport = null;
             for (const selection of selections) {
@@ -392,17 +392,17 @@ const Auth = {
                     console.error(`Failed to migrate selection for ${selection.sport}:`, error);
                 }
             }
-            
+
             // Clear temp selections after migration
             sessionStorage.removeItem('tempSelections');
-            
+
             return migratedSport; // Return sport for redirect
         } catch (error) {
             console.error('Error migrating temp selections:', error);
             return null;
         }
     },
-    
+
     // Resend verification code
     resendVerificationCode() {
         const email = sessionStorage.getItem('pendingVerificationEmail');
@@ -411,12 +411,12 @@ const Auth = {
             this.showLoginForm();
             return;
         }
-        
+
         const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
             Username: email,
             Pool: this.userPool
         });
-        
+
         cognitoUser.resendConfirmationCode((err, result) => {
             if (err) {
                 this.handleCognitoError(err);
@@ -425,45 +425,45 @@ const Auth = {
             }
         });
     },
-    
+
     // Handle login
     async handleLogin(e) {
         e.preventDefault();
         this.clearErrors();
-        
+
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
         const rememberMe = document.getElementById('rememberMe')?.checked || false;
-        
+
         // Validation
         if (!this.validateEmail(email)) {
             this.showError('loginEmailError', 'Please enter a valid email address');
             return;
         }
-        
+
         if (password.length < 6) {
             this.showError('loginPasswordError', 'Password is required');
             return;
         }
-        
+
         // Create authentication details
         const authenticationDetails = new AmazonCognitoIdentity.AuthenticationDetails({
             Username: email,
             Password: password
         });
-        
+
         // Create cognito user
         const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
             Username: email,
             Pool: this.userPool
         });
-        
+
         // Authenticate user
         cognitoUser.authenticateUser(authenticationDetails, {
             onSuccess: (result) => {
                 // Store tokens
                 this.storeTokens(result, rememberMe, email);
-                
+
                 // Get user attributes
                 cognitoUser.getUserAttributes((err, attributes) => {
                     if (!err && attributes) {
@@ -472,7 +472,7 @@ const Auth = {
                         const familyNameAttr = attributes.find(attr => attr.Name === 'family_name');
                         // Fallback to name attribute if given_name/family_name not found
                         const nameAttr = attributes.find(attr => attr.Name === 'name');
-                        
+
                         let name = email.split('@')[0]; // Default fallback
                         if (givenNameAttr && familyNameAttr) {
                             name = `${givenNameAttr.Value} ${familyNameAttr.Value}`.trim();
@@ -481,30 +481,30 @@ const Auth = {
                         } else if (nameAttr) {
                             name = nameAttr.Value;
                         }
-                        
+
                         this.createSession({ email, name, userId: result.getIdToken().payload.sub }, rememberMe);
                     } else {
                         this.createSession({ email, name: email.split('@')[0], userId: result.getIdToken().payload.sub }, rememberMe);
                     }
                 });
-                
+
                 this.showMessage('Login successful! Redirecting...', 'success');
-                
+
                 // Migrate temp selections if any (async)
                 this.migrateTempSelections().then(migratedSport => {
                     // Redirect after short delay
                     setTimeout(() => {
                         const urlParams = new URLSearchParams(window.location.search);
                         const redirect = urlParams.get('redirect');
-                        let redirectUrl = redirect === 'dashboard' 
-                            ? 'dashboard.html' 
+                        let redirectUrl = redirect === 'dashboard'
+                            ? 'dashboard.html'
                             : (sessionStorage.getItem('redirectAfterLogin') || 'dashboard.html');
-                        
+
                         // Add sport parameter if we migrated selections
                         if (migratedSport) {
                             redirectUrl += (redirectUrl.includes('?') ? '&' : '?') + `sport=${migratedSport}`;
                         }
-                        
+
                         sessionStorage.removeItem('redirectAfterLogin');
                         window.location.href = redirectUrl;
                     }, 1000);
@@ -514,8 +514,8 @@ const Auth = {
                     setTimeout(() => {
                         const urlParams = new URLSearchParams(window.location.search);
                         const redirect = urlParams.get('redirect');
-                        const redirectUrl = redirect === 'dashboard' 
-                            ? 'dashboard.html' 
+                        const redirectUrl = redirect === 'dashboard'
+                            ? 'dashboard.html'
                             : (sessionStorage.getItem('redirectAfterLogin') || 'dashboard.html');
                         sessionStorage.removeItem('redirectAfterLogin');
                         window.location.href = redirectUrl;
@@ -531,36 +531,36 @@ const Auth = {
             }
         });
     },
-    
+
     // Handle forgot password
     async handleForgotPassword(e) {
         e.preventDefault();
         this.clearErrors();
-        
+
         const email = document.getElementById('forgotPasswordEmail').value.trim();
-        
+
         if (!this.validateEmail(email)) {
             this.showError('forgotPasswordEmailError', 'Please enter a valid email address');
             return;
         }
-        
+
         // Create cognito user
         const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
             Username: email,
             Pool: this.userPool
         });
-        
+
         // Request password reset
         cognitoUser.forgotPassword({
             onSuccess: (data) => {
                 // Store email for reset password form
                 sessionStorage.setItem('resetPasswordEmail', email);
-                
+
                 // Show reset password form
                 this.hideAllForms();
                 const resetPasswordForm = document.getElementById('resetPasswordForm');
                 if (resetPasswordForm) resetPasswordForm.classList.add('active');
-                
+
                 this.showMessage('Verification code sent! Please check your email.', 'success');
             },
             onFailure: (err) => {
@@ -568,50 +568,50 @@ const Auth = {
             }
         });
     },
-    
+
     // Handle reset password
     async handleResetPassword(e) {
         e.preventDefault();
         this.clearErrors();
-        
+
         const code = document.getElementById('resetCode').value.trim();
         const newPassword = document.getElementById('newPassword').value;
         const confirmNewPassword = document.getElementById('confirmNewPassword').value;
         const email = sessionStorage.getItem('resetPasswordEmail');
-        
+
         if (!code) {
             this.showError('resetCodeError', 'Please enter verification code');
             return;
         }
-        
+
         if (newPassword.length < 8) {
             this.showError('newPasswordError', 'Password must be at least 8 characters');
             return;
         }
-        
+
         if (newPassword !== confirmNewPassword) {
             this.showError('confirmNewPasswordError', 'Passwords do not match');
             return;
         }
-        
+
         if (!email) {
             this.showMessage('Session expired. Please request password reset again.', 'error');
             this.showForgotPasswordForm();
             return;
         }
-        
+
         // Create cognito user
         const cognitoUser = new AmazonCognitoIdentity.CognitoUser({
             Username: email,
             Pool: this.userPool
         });
-        
+
         // Confirm password reset
         cognitoUser.confirmPassword(code, newPassword, {
             onSuccess: () => {
                 sessionStorage.removeItem('resetPasswordEmail');
                 this.showMessage('Password reset successful! You can now sign in.', 'success');
-                
+
                 // Switch to login form
                 setTimeout(() => {
                     this.showLoginForm();
@@ -622,7 +622,7 @@ const Auth = {
             }
         });
     },
-    
+
     // Store Cognito tokens
     storeTokens(result, rememberMe, email) {
         const tokens = {
@@ -631,14 +631,14 @@ const Auth = {
             refreshToken: result.getRefreshToken().getToken(),
             email: email
         };
-        
+
         if (rememberMe) {
             localStorage.setItem('cognitoTokens', JSON.stringify(tokens));
         } else {
             sessionStorage.setItem('cognitoTokens', JSON.stringify(tokens));
         }
     },
-    
+
     // Get stored tokens
     getStoredTokens() {
         try {
@@ -648,13 +648,13 @@ const Auth = {
             return null;
         }
     },
-    
+
     // Validate email format
     validateEmail(email) {
         const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return re.test(email);
     },
-    
+
     // Show error message
     showError(elementId, message) {
         const errorElement = document.getElementById(elementId);
@@ -662,32 +662,32 @@ const Auth = {
             errorElement.textContent = message;
         }
     },
-    
+
     // Clear all errors
     clearErrors() {
         const errorElements = document.querySelectorAll('.error-message');
         errorElements.forEach(el => el.textContent = '');
     },
-    
+
     // Show message
     showMessage(text, type = 'success') {
         const messageEl = document.getElementById('message');
         if (!messageEl) return;
-        
+
         messageEl.textContent = text;
         messageEl.className = `message ${type}`;
         messageEl.classList.add('show');
-        
+
         setTimeout(() => {
             messageEl.classList.remove('show');
         }, 3000);
     },
-    
+
     // Handle Cognito errors
     handleCognitoError(err) {
         let errorMessage = 'An error occurred. Please try again.';
         let errorField = null;
-        
+
         if (err.code) {
             switch (err.code) {
                 case 'NotAuthorizedException':
@@ -743,14 +743,14 @@ const Auth = {
                 errorMessage = err.message;
             }
         }
-        
+
         if (errorField) {
             this.showError(errorField, errorMessage);
         }
         this.showMessage(errorMessage, 'error');
         console.error('Cognito Error:', err);
     },
-    
+
     // Create user session
     createSession(user, rememberMe) {
         const sessionData = {
@@ -759,19 +759,19 @@ const Auth = {
             name: user.name,
             loginTime: new Date().toISOString()
         };
-        
+
         if (rememberMe) {
             localStorage.setItem('currentUser', JSON.stringify(sessionData));
         } else {
             sessionStorage.setItem('currentUser', JSON.stringify(sessionData));
         }
     },
-    
+
     // Check if user is logged in
     checkSession() {
         const tokens = this.getStoredTokens();
         if (!tokens) return null;
-        
+
         // Check if tokens are still valid (basic check)
         try {
             const sessionData = sessionStorage.getItem('currentUser') || localStorage.getItem('currentUser');
@@ -781,15 +781,15 @@ const Auth = {
         } catch (error) {
             console.error('Error checking session:', error);
         }
-        
+
         return null;
     },
-    
+
     // Get current user
     getCurrentUser() {
         return this.checkSession();
     },
-    
+
     // Logout
     logout() {
         // Sign out from Cognito
@@ -799,10 +799,10 @@ const Auth = {
                 Username: tokens.email,
                 Pool: this.userPool
             });
-            
+
             cognitoUser.signOut();
         }
-        
+
         // Clear local storage
         sessionStorage.removeItem('currentUser');
         sessionStorage.removeItem('cognitoTokens');
@@ -810,21 +810,21 @@ const Auth = {
         sessionStorage.removeItem('resetPasswordEmail');
         localStorage.removeItem('currentUser');
         localStorage.removeItem('cognitoTokens');
-        
+
         window.location.href = 'index.html';
     },
-    
+
     // Check if user is authenticated
     isAuthenticated() {
         return this.checkSession() !== null;
     },
-    
+
     // Get ID token for API calls
     getIdToken() {
         const tokens = this.getStoredTokens();
         return tokens ? tokens.idToken : null;
     },
-    
+
     // Get access token for API calls
     getAccessToken() {
         const tokens = this.getStoredTokens();
@@ -833,20 +833,29 @@ const Auth = {
 };
 
 // Initialize when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
-    // Wait for Cognito SDK to load
-    if (typeof AmazonCognitoIdentity !== 'undefined') {
-        Auth.init();
-    } else {
-        // Retry after a short delay
-        setTimeout(() => {
-            if (typeof AmazonCognitoIdentity !== 'undefined') {
-                Auth.init();
-            } else {
-                console.error('AWS Cognito SDK not loaded');
-            }
-        }, 500);
-    }
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', function () {
+    // Robust check for Cognito SDK
+    const checkCognitoLoaded = (retries = 0) => {
+        if (typeof AmazonCognitoIdentity !== 'undefined') {
+            Auth.init();
+        } else if (retries < 10) { // Try for up to 5 seconds
+            setTimeout(() => checkCognitoLoaded(retries + 1), 500);
+        } else {
+            console.error('AWS Cognito SDK failed to load after multiple attempts.');
+            // Fallback: Disable auth features or show a user-friendly message
+            const loginButtons = document.querySelectorAll('.login-button, #loginButton');
+            loginButtons.forEach(btn => {
+                if (btn) {
+                    btn.style.opacity = '0.5';
+                    btn.style.pointerEvents = 'none';
+                    btn.textContent = 'Auth Unavailable';
+                }
+            });
+        }
+    };
+
+    checkCognitoLoaded();
 });
 
 // Export for use in other files

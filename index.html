@@ -1,67 +1,180 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sports Selection - Choose Your Passion</title>
+    <title>SportsHub - Never Miss a Match</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@600;700;800;900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/globals.css">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
-    <div class="container">
-        <div class="auth-header">
-            <div id="userInfo" class="user-info hidden">
-                <span class="user-greeting">Hello, <span id="userName"></span>!</span>
-                <a href="dashboard.html" class="dashboard-link">Dashboard</a>
-                <button class="logout-button" id="logoutButton">Logout</button>
-            </div>
-            <a href="login.html" class="login-button" id="loginButton">Login</a>
-        </div>
-        <header>
-            <h1 class="main-title">Choose Your Passion</h1>
-            <p class="subtitle">Select a sport to follow your favorite teams and countries</p>
-        </header>
-        
-        <div class="sports-grid">
-            <div class="sport-box" data-sport="football">
-                <div class="sport-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1431324155629-1a6deb1dec8d?w=800&q=80" alt="Football" class="sport-image">
-                    <div class="sport-overlay"></div>
-                </div>
-                <div class="sport-content">
-                    <h2 class="sport-title">Football</h2>
-                    <p class="sport-description">Follow your favorite national teams</p>
-                    <div class="sport-icon">⚽</div>
-                </div>
-            </div>
-            
-            <div class="sport-box" data-sport="cricket">
-                <div class="sport-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1535131749006-b9433bb951b8?w=800&q=80" alt="Cricket" class="sport-image">
-                    <div class="sport-overlay"></div>
-                </div>
-                <div class="sport-content">
-                    <h2 class="sport-title">Cricket</h2>
-                    <p class="sport-description">Support your cricket nations</p>
-                    <div class="sport-icon">🏏</div>
-                </div>
-            </div>
-            
-            <div class="sport-box" data-sport="f1">
-                <div class="sport-image-wrapper">
-                    <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="Formula 1" class="sport-image">
-                    <div class="sport-overlay"></div>
-                </div>
-                <div class="sport-content">
-                    <h2 class="sport-title">Formula 1</h2>
-                    <p class="sport-description">Follow F1 teams and drivers</p>
-                    <div class="sport-icon">🏎️</div>
-                </div>
-            </div>
-        </div>
+    <!-- Animated Background -->
+    <div class="hero-background">
+        <div class="gradient-orb orb-1"></div>
+        <div class="gradient-orb orb-2"></div>
+        <div class="gradient-orb orb-3"></div>
     </div>
-    
+
+    <!-- Navigation -->
+    <nav class="main-nav">
+        <div class="nav-container">
+            <div class="logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Sports<span class="text-gradient">Hub</span></span>
+            </div>
+
+            <div class="nav-actions">
+                <div id="userInfo" class="user-info hidden">
+                    <span class="user-greeting">Hi, <span id="userName" class="text-gradient">User</span></span>
+                    <a href="dashboard.html" class="btn btn-ghost btn-sm">Dashboard</a>
+                    <button class="btn btn-ghost btn-sm" id="logoutButton">Logout</button>
+                </div>
+                <a href="login.html" class="btn btn-primary" id="loginButton">Sign In</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                Never Miss<br>
+                <span class="text-gradient">Your Match</span>
+            </h1>
+            <p class="hero-subtitle">
+                Get instant reminders for your favorite teams' matches.<br>
+                Cricket, Football, Formula 1 — all in one place.
+            </p>
+            <div class="hero-cta">
+                <a href="#sports" class="btn btn-primary btn-lg">Get Started</a>
+                <a href="#how-it-works" class="btn btn-ghost btn-lg">How It Works</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sports Selection Section -->
+    <section class="sports-section" id="sports">
+        <div class="section-header">
+            <h2 class="section-title">Choose Your Sport</h2>
+            <p class="section-subtitle">Select a sport to track your favorite teams and get match reminders</p>
+        </div>
+
+        <div class="sports-grid">
+            <!-- Football Card -->
+            <div class="sport-card" data-sport="football">
+                <div class="sport-card-image">
+                    <img src="images/football.png" alt="Football">
+                    <div class="sport-card-overlay"></div>
+                </div>
+                <div class="sport-card-content">
+                    <div class="sport-icon">⚽</div>
+                    <h3 class="sport-name">Football</h3>
+                    <p class="sport-description">Premier League, La Liga, World Cup</p>
+                    <div class="sport-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cricket Card -->
+            <div class="sport-card" data-sport="cricket">
+                <div class="sport-card-image">
+                    <img src="images/cricket.png" alt="Cricket">
+                    <div class="sport-card-overlay"></div>
+                </div>
+                <div class="sport-card-content">
+                    <div class="sport-icon">🏏</div>
+                    <h3 class="sport-name">Cricket</h3>
+                    <p class="sport-description">IPL, International Tests, T20s</p>
+                    <div class="sport-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <!-- F1 Card -->
+            <div class="sport-card" data-sport="f1">
+                <div class="sport-card-image">
+                    <img src="images/f1.png" alt="Formula 1">
+                    <div class="sport-card-overlay"></div>
+                </div>
+                <div class="sport-card-content">
+                    <div class="sport-icon">🏎️</div>
+                    <h3 class="sport-name">Formula 1</h3>
+                    <p class="sport-description">Grand Prix, Qualifiers, Championships</p>
+                    <div class="sport-arrow">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works-section" id="how-it-works">
+        <div class="section-header">
+            <h2 class="section-title">How It Works</h2>
+            <p class="section-subtitle">Three simple steps to never miss a match</p>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card">
+                <div class="step-number">01</div>
+                <div class="step-icon">🎯</div>
+                <h3 class="step-title">Select Your Teams</h3>
+                <p class="step-description">Choose your favorite teams from Cricket, Football, or Formula 1</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">02</div>
+                <div class="step-icon">📅</div>
+                <h3 class="step-title">View Schedules</h3>
+                <p class="step-description">See all upcoming matches for your selected teams in one place</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">03</div>
+                <div class="step-icon">🔔</div>
+                <h3 class="step-title">Get Reminders</h3>
+                <p class="step-description">Receive notifications before each match so you never miss the action</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <span class="logo-icon">⚡</span>
+                <span class="logo-text">Sports<span class="text-gradient">Hub</span></span>
+            </div>
+            <p class="footer-text">Never miss a match. Stay updated with your favorite sports.</p>
+        </div>
+    </footer>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.3.0/dist/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/main.js"></script>
 </body>
-</html>
 
+</html>

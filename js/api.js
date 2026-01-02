@@ -1,14 +1,14 @@
 // API for saving user selections (with AWS Cognito token support)
 const API = {
     // Backend API base URL
-    baseURL: 'http://localhost:8000',
-    
+    baseURL: 'http://127.0.0.1:8000',
+
     // Get authentication headers for API calls
     getAuthHeaders() {
         const headers = {
             'Content-Type': 'application/json'
         };
-        
+
         // Add Cognito ID token if available
         if (window.Auth && window.Auth.isAuthenticated()) {
             const idToken = window.Auth.getIdToken();
@@ -16,10 +16,10 @@ const API = {
                 headers['Authorization'] = `Bearer ${idToken}`;
             }
         }
-        
+
         return headers;
     },
-    
+
     // Helper to get user ID
     getUserId() {
         if (window.Auth && window.Auth.isAuthenticated()) {
@@ -28,7 +28,7 @@ const API = {
         }
         return null;
     },
-    
+
     // Save selections to backend
     async saveSelections(sport, selections, category = null) {
         try {
@@ -37,7 +37,7 @@ const API = {
             if (userId) {
                 url += `?userId=${encodeURIComponent(userId)}`;
             }
-            
+
             const response = await fetch(url, {
                 method: 'POST',
                 headers: this.getAuthHeaders(),
@@ -47,12 +47,12 @@ const API = {
                     selections: selections
                 })
             });
-            
+
             if (!response.ok) {
                 const error = await response.json();
                 throw new Error(error.detail || 'Failed to save selections');
             }
-            
+
             const data = await response.json();
             return {
                 success: true,
@@ -67,23 +67,23 @@ const API = {
             };
         }
     },
-    
+
     // Get saved selections (optional - for future use)
     async getSelections(sport, userId = null) {
         try {
-            const url = userId 
+            const url = userId
                 ? `${this.baseURL}/api/selections/${sport}?userId=${userId}`
                 : `${this.baseURL}/api/selections/${sport}`;
-            
+
             const response = await fetch(url, {
                 method: 'GET',
                 headers: this.getAuthHeaders()
             });
-            
+
             if (!response.ok) {
                 return [];
             }
-            
+
             const data = await response.json();
             return data.data || [];
         } catch (error) {
@@ -91,23 +91,23 @@ const API = {
             return [];
         }
     },
-    
+
     // Get user's saved selections
     async getUserSelections(userId) {
         try {
-            const url = userId 
+            const url = userId
                 ? `${this.baseURL}/api/selections?userId=${userId}`
                 : `${this.baseURL}/api/selections`;
-            
+
             const response = await fetch(url, {
                 method: 'GET',
                 headers: this.getAuthHeaders()
             });
-            
+
             if (!response.ok) {
                 return [];
             }
-            
+
             const data = await response.json();
             return data.data || [];
         } catch (error) {
@@ -115,7 +115,7 @@ const API = {
             return [];
         }
     },
-    
+
     // Match CRUD Operations
     async saveMatch(match) {
         try {
@@ -136,12 +136,12 @@ const API = {
                     notificationEnabled: match.notificationEnabled || false
                 })
             });
-            
+
             if (!response.ok) {
                 const error = await response.json();
                 throw new Error(error.detail || 'Failed to save match');
             }
-            
+
             const data = await response.json();
             return {
                 success: true,
@@ -156,22 +156,22 @@ const API = {
             };
         }
     },
-    
+
     async getMatches(userId = null) {
         try {
-            const url = userId 
+            const url = userId
                 ? `${this.baseURL}/api/matches?userId=${userId}`
                 : `${this.baseURL}/api/matches`;
-            
+
             const response = await fetch(url, {
                 method: 'GET',
                 headers: this.getAuthHeaders()
             });
-            
+
             if (!response.ok) {
                 return [];
             }
-            
+
             const data = await response.json();
             return data.data || [];
         } catch (error) {
@@ -179,7 +179,7 @@ const API = {
             return [];
         }
     },
-    
+
     async updateMatch(matchId, updates) {
         try {
             const response = await fetch(`${this.baseURL}/api/matches/${matchId}`, {
@@ -187,12 +187,12 @@ const API = {
                 headers: this.getAuthHeaders(),
                 body: JSON.stringify(updates)
             });
-            
+
             if (!response.ok) {
                 const error = await response.json();
                 throw new Error(error.detail || 'Failed to update match');
             }
-            
+
             const data = await response.json();
             return {
                 success: true,
@@ -207,19 +207,19 @@ const API = {
             };
         }
     },
-    
+
     async deleteMatch(matchId) {
         try {
             const response = await fetch(`${this.baseURL}/api/matches/${matchId}`, {
                 method: 'DELETE',
                 headers: this.getAuthHeaders()
             });
-            
+
             if (!response.ok) {
                 const error = await response.json();
                 throw new Error(error.detail || 'Failed to delete match');
             }
-            
+
             const data = await response.json();
             return {
                 success: true,
@@ -233,7 +233,7 @@ const API = {
             };
         }
     },
-    
+
     // Delete selection
     async deleteSelection(userId, sport, category) {
         try {
@@ -242,12 +242,12 @@ const API = {
                 method: 'DELETE',
                 headers: this.getAuthHeaders()
             });
-            
+
             if (!response.ok) {
                 const error = await response.json();
                 throw new Error(error.detail || 'Failed to delete selection');
             }
-            
+
             const data = await response.json();
             return {
                 success: true,

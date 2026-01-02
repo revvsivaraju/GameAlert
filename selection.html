@@ -1,50 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Your Favorites</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/globals.css">
     <link rel="stylesheet" href="css/selection.css">
 </head>
+
 <body>
-    <div class="selection-container">
+    <div class="background-globes">
+        <div class="globe globe-1"></div>
+        <div class="globe globe-2"></div>
+    </div>
+
+    <div class="selection-container animate-fade-in">
         <header class="selection-header">
-            <button class="back-button" onclick="window.location.href='index.html'">
-                <span class="back-arrow">←</span> Back
+            <button class="btn btn-ghost btn-sm" onclick="window.location.href='index.html'">
+                ← Back
             </button>
             <div class="header-content">
-                <div>
-                    <h1 class="selection-title" id="sportTitle">Select Your Favorites</h1>
-                    <p class="selection-subtitle" id="sportSubtitle">Choose the teams or countries you want to follow</p>
-                </div>
-                <div id="userInfoSelection" class="user-info-selection hidden">
-                    <span class="user-badge">👤 <span id="userNameSelection"></span></span>
-                </div>
+                <h1 class="selection-title text-gradient" id="sportTitle">Select Your Favorites</h1>
+                <p class="selection-subtitle" id="sportSubtitle">Choose the teams or countries you want to follow</p>
+            </div>
+            <div id="userInfoSelection" class="user-info-selection hidden">
+                <span class="user-badge">👤 <span id="userNameSelection"></span></span>
             </div>
         </header>
-        
-        <div class="selection-content">
+
+        <div class="selection-content glass-panel">
             <div class="options-grid" id="optionsGrid">
                 <!-- Options will be dynamically loaded here -->
             </div>
-            
+
             <div class="selection-actions">
-                <button class="save-button" id="saveButton">
-                    <span class="save-icon">💾</span>
+                <div class="selected-count" id="selectedCount">0 selected</div>
+                <button class="btn btn-primary" id="saveButton">
                     Save Selections
                 </button>
-                <div class="selected-count" id="selectedCount">0 selected</div>
             </div>
         </div>
-        
+
         <div class="message" id="message"></div>
     </div>
-    
+
+    <!-- AWS Cognito SDK -->
+    <script
+        src="https://cdn.jsdelivr.net/npm/amazon-cognito-identity-js@6.3.0/dist/amazon-cognito-identity.min.js"></script>
+    <script src="js/config.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/api.js"></script>
     <script src="js/scheduleLoader.js"></script>
     <script src="js/matches.js"></script>
     <script src="js/selection.js"></script>
 </body>
-</html>
 
+</html>

@@ -69,38 +69,36 @@ def get_schedule_file_path(sport: str, category: str, team: str) -> Optional[Pat
     print(f"[DEBUG] Looking for schedule: sport={sport}, category={category}, team={team}")
     print(f"[DEBUG] Project root: {project_root}")
     
-    # Check for JSON files (various naming conventions)
-    if category_folder:
-        # First, try to find any JSON file in the team directory
-        team_dir = project_root / f"Schedules/{sport_folder}/{category_folder}/{team}"
-        print(f"[DEBUG] Team directory: {team_dir}, exists: {team_dir.exists()}")
-        
-        if team_dir.exists():
-            json_files = list(team_dir.glob("*.json"))
-            print(f"[DEBUG] Found JSON files: {[str(f.name) for f in json_files]}")
-            if json_files:
-                # Return the first JSON file found (should be India_Internation.json)
-                return json_files[0]
-        
-        # Fallback: try specific paths
-        json_paths = [
-            project_root / f"Schedules/{sport_folder}/{category_folder}/{team}/India_Internation.json",
-            project_root / f"Schedules/{sport_folder}/{category_folder}/{team}/{team}_Internation.json",
-            project_root / f"Schedules/{sport_folder}/{category_folder}/{team}/{team}_International.json",
-        ]
-        
-        for json_path in json_paths:
-            if json_path.exists():
-                print(f"[DEBUG] Found schedule file: {json_path}")
-                return json_path
-    else:
-        json_paths = [
-            project_root / f"Schedules/{sport_folder}/{team}/{team.lower()}_schedule_2026.json"
-        ]
-        for json_path in json_paths:
-            if json_path.exists():
-                return json_path
+    # Construct the file path based on naming convention: {Team}_Schedule.json
+    # Replace spaces with underscores in team name
+    team_filename = team.replace(" ", "_") + "_Schedule.json"
     
+    # Build the path to the schedule file
+    if category_folder:
+        schedule_path = project_root / f"Schedules/{sport_folder}/{category_folder}/{team_filename}"
+    else:
+        schedule_path = project_root / f"Schedules/{sport_folder}/{team_filename}"
+    
+    print(f"[DEBUG] Looking for file: {schedule_path}")
+    
+    # Check if the file exists
+    if schedule_path.exists():
+        print(f"[DEBUG] Found schedule file: {schedule_path}")
+        return schedule_path
+    
+    # FALLBACK: Try looking in subdirectories (old structure)
+    if category_folder:
+        team_dir = project_root / f"Schedules/{sport_folder}/{category_folder}/{team}"
+    else:
+        team_dir = project_root / f"Schedules/{sport_folder}/{team}"
+
+    # Try specific file in team directory
+    if team_dir.exists():
+        json_files = list(team_dir.glob("*.json"))
+        if json_files:
+            print(f"[DEBUG] Found schedule in subdirectory: {json_files[0]}")
+            return json_files[0]
+
     print(f"[DEBUG] Schedule file not found for {sport}/{category}/{team}")
     return None
 

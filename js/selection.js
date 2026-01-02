@@ -147,16 +147,19 @@ function getCategoryFromURL() {
 
 // Load category selection or options based on URL
 function loadOptions() {
+    const optionsGrid = document.getElementById('optionsGrid');
+    if (!optionsGrid) return;
+
     const sport = getSportFromURL();
     const category = getCategoryFromURL();
     const data = sportData[sport];
-    
+
     if (!data) {
         // Invalid sport, redirect to home
         window.location.href = 'index.html';
         return;
     }
-    
+
     // If no category selected, show category selection
     if (!category) {
         loadCategories(sport, data);
@@ -176,15 +179,15 @@ function loadOptions() {
 function loadCategories(sport, data) {
     document.getElementById('sportTitle').textContent = data.title;
     document.getElementById('sportSubtitle').textContent = 'Choose a category';
-    
+
     const optionsGrid = document.getElementById('optionsGrid');
     optionsGrid.className = 'options-grid loading';
     optionsGrid.innerHTML = '<div class="loading-spinner"></div>';
-    
+
     setTimeout(() => {
         optionsGrid.className = 'options-grid category-grid';
         optionsGrid.innerHTML = '';
-        
+
         // Create category cards
         Object.keys(data.categories).forEach((categoryKey, index) => {
             const category = data.categories[categoryKey];
@@ -192,31 +195,31 @@ function loadCategories(sport, data) {
             card.className = 'option-card category-card';
             card.setAttribute('data-category', categoryKey);
             card.style.animationDelay = `${index * 0.1}s`;
-            
+
             card.innerHTML = `
                 <div class="category-icon">${getCategoryIcon(sport, categoryKey)}</div>
                 <p class="option-name">${category.name}</p>
             `;
-            
-            card.addEventListener('click', function() {
+
+            card.addEventListener('click', function () {
                 const selectedCategory = this.getAttribute('data-category');
                 window.location.href = `selection.html?sport=${sport}&category=${selectedCategory}`;
             });
-            
+
             card.setAttribute('tabindex', '0');
             card.setAttribute('role', 'button');
             card.setAttribute('aria-label', `Select ${category.name}`);
-            
-            card.addEventListener('keypress', function(e) {
+
+            card.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     this.click();
                 }
             });
-            
+
             optionsGrid.appendChild(card);
         });
-        
+
         // Hide save button and selected count on category selection
         const saveButton = document.getElementById('saveButton');
         const selectedCount = document.getElementById('selectedCount');
@@ -241,7 +244,7 @@ function getCategoryIcon(sport, category) {
 function loadCategoryOptions(sport, category, categoryData) {
     document.getElementById('sportTitle').textContent = `${sportData[sport].title} - ${categoryData.name}`;
     document.getElementById('sportSubtitle').textContent = categoryData.subtitle;
-    
+
     // Show save button and selected count
     const saveButton = document.getElementById('saveButton');
     const selectedCount = document.getElementById('selectedCount');
@@ -251,53 +254,53 @@ function loadCategoryOptions(sport, category, categoryData) {
     if (selectedCount) {
         selectedCount.classList.remove('hidden');
     }
-    
+
     // Update back button to go back to category selection
     const backButton = document.querySelector('.back-button');
-    backButton.onclick = function() {
+    backButton.onclick = function () {
         window.location.href = `selection.html?sport=${sport}`;
     };
-    
+
     const optionsGrid = document.getElementById('optionsGrid');
     optionsGrid.className = 'options-grid loading';
     optionsGrid.innerHTML = '<div class="loading-spinner"></div>';
-    
+
     setTimeout(() => {
         optionsGrid.className = 'options-grid';
         optionsGrid.innerHTML = '';
-        
+
         // Create option cards
         categoryData.options.forEach((option, index) => {
             const card = document.createElement('div');
             card.className = 'option-card';
             card.setAttribute('data-option', option.name);
             card.style.animationDelay = `${index * 0.05}s`;
-            
+
             card.innerHTML = `
                 <div class="option-flag">${option.flag}</div>
                 <p class="option-name">${option.name}</p>
             `;
-            
+
             // Add click event
-            card.addEventListener('click', function() {
+            card.addEventListener('click', function () {
                 toggleSelection(this);
             });
-            
+
             // Add keyboard accessibility
             card.setAttribute('tabindex', '0');
             card.setAttribute('role', 'button');
             card.setAttribute('aria-label', `Select ${option.name}`);
-            
-            card.addEventListener('keypress', function(e) {
+
+            card.addEventListener('keypress', function (e) {
                 if (e.key === 'Enter' || e.key === ' ') {
                     e.preventDefault();
                     toggleSelection(this);
                 }
             });
-            
+
             optionsGrid.appendChild(card);
         });
-        
+
         // Update selected count
         updateSelectedCount();
     }, 300);
@@ -314,7 +317,7 @@ function updateSelectedCount() {
     const selectedCards = document.querySelectorAll('.option-card.selected');
     const count = selectedCards.length;
     document.getElementById('selectedCount').textContent = `${count} selected`;
-    
+
     // Enable/disable save button
     const saveButton = document.getElementById('saveButton');
     saveButton.disabled = count === 0;
@@ -332,7 +335,7 @@ function showMessage(text, type = 'success') {
     messageEl.textContent = text;
     messageEl.className = `message ${type}`;
     messageEl.classList.add('show');
-    
+
     setTimeout(() => {
         messageEl.classList.remove('show');
     }, 3000);
@@ -359,19 +362,19 @@ async function saveSelections() {
     const sport = getSportFromURL();
     const category = getCategoryFromURL();
     const selections = getSelectedOptions();
-    
+
     if (selections.length === 0) {
         showMessage('Please select at least one option', 'error');
         return;
     }
-    
+
     // Check if user is logged in
     const isLoggedIn = window.Auth && window.Auth.isAuthenticated();
-    
+
     const saveButton = document.getElementById('saveButton');
     saveButton.disabled = true;
     saveButton.innerHTML = '<span class="save-icon">⏳</span> Saving...';
-    
+
     try {
         if (!isLoggedIn) {
             // Store temporarily in sessionStorage
@@ -382,23 +385,23 @@ async function saveSelections() {
                 selections: selections,
                 timestamp: new Date().toISOString()
             };
-            
+
             // Check if selection for this sport/category already exists
             const existingIndex = tempSelections.findIndex(
                 s => s.sport === sport && s.category === category
             );
-            
+
             if (existingIndex >= 0) {
                 tempSelections[existingIndex] = newSelection;
             } else {
                 tempSelections.push(newSelection);
             }
-            
+
             sessionStorage.setItem('tempSelections', JSON.stringify(tempSelections));
-            
+
             // Show signup prompt
             showSignupPrompt(sport);
-            
+
             // Reset button
             saveButton.innerHTML = '<span class="save-icon">💾</span> Save Selections';
             saveButton.disabled = false;
@@ -406,7 +409,7 @@ async function saveSelections() {
             // User is logged in, save normally
             const response = await API.saveSelections(sport, selections, category);
             showMessage(response.message, 'success');
-            
+
             // Generate matches for selected teams
             if (window.Matches) {
                 const generatedMatches = await Matches.generateMatches([{
@@ -414,11 +417,11 @@ async function saveSelections() {
                     category: category,
                     teams: selections
                 }]);
-                
+
                 // Store generated matches temporarily (user can save them in dashboard)
                 sessionStorage.setItem('generatedMatches', JSON.stringify(generatedMatches));
             }
-            
+
             // Reset button after a delay
             setTimeout(() => {
                 saveButton.innerHTML = '<span class="save-icon">💾</span> Save Selections';
@@ -439,7 +442,7 @@ function showSignupPrompt(sport) {
     if (existingPrompt) {
         existingPrompt.remove();
     }
-    
+
     // Create prompt banner
     const prompt = document.createElement('div');
     prompt.id = 'signupPrompt';
@@ -456,21 +459,21 @@ function showSignupPrompt(sport) {
             </button>
         </div>
     `;
-    
+
     // Insert before selection actions
     const selectionActions = document.querySelector('.selection-actions');
     selectionActions.parentNode.insertBefore(prompt, selectionActions);
-    
+
     // Add event listener to signup button
-    document.getElementById('signupPromptButton').addEventListener('click', function() {
+    document.getElementById('signupPromptButton').addEventListener('click', function () {
         // Store current URL to redirect back after signup
         const currentUrl = window.location.href;
         sessionStorage.setItem('redirectAfterSignup', currentUrl);
-        
+
         // Redirect to login page with signup mode
         window.location.href = 'login.html?signup=true&redirect=dashboard';
     });
-    
+
     // Animate in
     setTimeout(() => {
         prompt.classList.add('show');
@@ -493,15 +496,18 @@ function checkAndDisplayUserInfo() {
 }
 
 // Initialize page when DOM is loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     // Check auth state
     checkAndDisplayUserInfo();
-    
+
     loadOptions();
-    
+
     // Add event listener to save button
-    document.getElementById('saveButton').addEventListener('click', saveSelections);
-    
+    const saveButton = document.getElementById('saveButton');
+    if (saveButton) {
+        saveButton.addEventListener('click', saveSelections);
+    }
+
     // Check if there are temp selections and user is now logged in
     const isLoggedIn = window.Auth && window.Auth.isAuthenticated();
     if (isLoggedIn) {

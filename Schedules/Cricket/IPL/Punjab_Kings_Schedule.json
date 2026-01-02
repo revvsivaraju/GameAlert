@@ -1,0 +1,20 @@
+[
+    {
+        "date": "2026-04-05",
+        "time": "19:30",
+        "team(home)": "Punjab Kings",
+        "opponent(away)": "TBD",
+        "location": "Home Stadium",
+        "series": "IPL 2026",
+        "format": "T20"
+    },
+    {
+        "date": "2026-04-10",
+        "time": "15:30",
+        "team(home)": "TBD",
+        "opponent(away)": "Punjab Kings",
+        "location": "Away Stadium",
+        "series": "IPL 2026",
+        "format": "T20"
+    }
+]
