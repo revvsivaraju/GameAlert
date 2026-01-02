@@ -215,8 +215,10 @@ function loadCategories(sport, data) {
         });
         
         // Hide save button and selected count on category selection
-        document.getElementById('saveButton').style.display = 'none';
-        document.getElementById('selectedCount').style.display = 'none';
+        const saveButton = document.getElementById('saveButton');
+        const selectedCount = document.getElementById('selectedCount');
+        if (saveButton) saveButton.classList.add('hidden');
+        if (selectedCount) selectedCount.classList.add('hidden');
     }, 300);
 }
 
@@ -238,8 +240,14 @@ function loadCategoryOptions(sport, category, categoryData) {
     document.getElementById('sportSubtitle').textContent = categoryData.subtitle;
     
     // Show save button and selected count
-    document.getElementById('saveButton').style.display = 'flex';
-    document.getElementById('selectedCount').style.display = 'block';
+    const saveButton = document.getElementById('saveButton');
+    const selectedCount = document.getElementById('selectedCount');
+    if (saveButton) {
+        saveButton.classList.remove('hidden');
+    }
+    if (selectedCount) {
+        selectedCount.classList.remove('hidden');
+    }
     
     // Update back button to go back to category selection
     const backButton = document.querySelector('.back-button');
@@ -358,8 +366,26 @@ async function saveSelections() {
     }
 }
 
+// Check and display user info if logged in
+function checkAndDisplayUserInfo() {
+    if (window.Auth && window.Auth.isAuthenticated()) {
+        const user = window.Auth.getCurrentUser();
+        if (user) {
+            const userInfoSelection = document.getElementById('userInfoSelection');
+            const userNameSelection = document.getElementById('userNameSelection');
+            if (userInfoSelection) {
+                userInfoSelection.classList.remove('hidden');
+            }
+            if (userNameSelection) userNameSelection.textContent = user.name;
+        }
+    }
+}
+
 // Initialize page when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
+    // Check auth state
+    checkAndDisplayUserInfo();
+    
     loadOptions();
     
     // Add event listener to save button

@@ -12,8 +12,15 @@
             <button class="back-button" onclick="window.location.href='index.html'">
                 <span class="back-arrow">←</span> Back
             </button>
-            <h1 class="selection-title" id="sportTitle">Select Your Favorites</h1>
-            <p class="selection-subtitle" id="sportSubtitle">Choose the teams or countries you want to follow</p>
+            <div class="header-content">
+                <div>
+                    <h1 class="selection-title" id="sportTitle">Select Your Favorites</h1>
+                    <p class="selection-subtitle" id="sportSubtitle">Choose the teams or countries you want to follow</p>
+                </div>
+                <div id="userInfoSelection" class="user-info-selection hidden">
+                    <span class="user-badge">👤 <span id="userNameSelection"></span></span>
+                </div>
+            </div>
         </header>
         
         <div class="selection-content">
@@ -33,6 +40,7 @@
         <div class="message" id="message"></div>
     </div>
     
+    <script src="js/auth.js"></script>
     <script src="js/api.js"></script>
     <script src="js/selection.js"></script>
 </body>

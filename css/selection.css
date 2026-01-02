@@ -50,6 +50,34 @@ body {
     position: relative;
 }
 
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.user-info-selection {
+    background: rgba(255, 255, 255, 0.2);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    padding: 10px 20px;
+    border-radius: 25px;
+    animation: fadeInDown 0.5s ease-out;
+}
+
+.user-info-selection.hidden {
+    display: none;
+}
+
+.user-badge {
+    color: white;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+}
+
 .back-button {
     position: absolute;
     left: 0;
@@ -300,6 +328,11 @@ body {
     border-radius: 25px;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+}
+
+.save-button.hidden,
+.selected-count.hidden {
+    display: none !important;
 }
 
 .message {
