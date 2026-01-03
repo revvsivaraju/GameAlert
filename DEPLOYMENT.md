@@ -62,62 +62,17 @@ By default, the frontend expects the backend at `http://127.0.0.1:8000`. For pro
 4. Configure security group to allow port 8000
 5. Set the EC2 public IP as your `BACKEND_API_URL`
 
-### Option 2: Render (Free Tier Available) ⭐ RECOMMENDED
+### Option 2: Render (Free Tier Available)
 
-This project includes a `render.yaml` blueprint and GitHub Actions workflow for easy deployment.
-
-#### Step 1: Create Render Account & Service
-
-1. Go to [render.com](https://render.com) and sign up (free)
-2. Click **New** → **Web Service**
-3. Connect your GitHub account and select `revvsivaraju/GameAlert` repo
-4. Configure the service:
-   - **Name**: `sportshub-api` (or your choice)
-   - **Region**: Oregon (or closest to you)
-   - **Branch**: `main`
+1. Create account at [render.com](https://render.com)
+2. Create a new **Web Service**
+3. Connect your GitHub repo
+4. Configure:
    - **Root Directory**: `backend`
-   - **Runtime**: `Python 3`
    - **Build Command**: `pip install -r requirements.txt`
    - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
-   - **Instance Type**: `Free`
-
-5. Click **Create Web Service**
-
-#### Step 2: Add Environment Variables in Render
-
-In your Render service dashboard, go to **Environment** and add:
-
-| Key | Value |
-|-----|-------|
-| `AWS_ACCESS_KEY_ID` | Your AWS access key |
-| `AWS_SECRET_ACCESS_KEY` | Your AWS secret key |
-| `AWS_REGION` | `us-east-1` |
-
-#### Step 3: Get Your Render API Credentials (for GitHub Actions)
-
-1. Go to **Account Settings** → **API Keys**
-2. Create a new API key and copy it
-3. Get your Service ID from the URL: `https://dashboard.render.com/web/srv-XXXXXXXXXX` (the `srv-XXXXXXXXXX` part)
-
-#### Step 4: Add Secrets to GitHub
-
-1. Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions**
-2. Add these **Secrets**:
-   - `RENDER_API_KEY`: Your Render API key
-   - `RENDER_SERVICE_ID`: Your service ID (e.g., `srv-abc123xyz`)
-
-3. Add this **Variable**:
-   - `BACKEND_API_URL`: Your Render URL (e.g., `https://sportshub-api.onrender.com`)
-
-#### Step 5: Deploy!
-
-Your backend will auto-deploy when you push changes to the `backend/` folder. You can also:
-- Manually trigger from GitHub **Actions** tab
-- Deploy directly from Render dashboard
-
-#### Your URLs After Setup:
-- **Frontend**: `https://revvsivaraju.github.io/GameAlert/`
-- **Backend**: `https://sportshub-api.onrender.com`
+5. Add environment variables for AWS credentials
+6. Use the Render URL as your `BACKEND_API_URL`
 
 ### Option 3: Railway (Simple Deployment)
 
