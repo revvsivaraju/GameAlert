@@ -1,0 +1,73 @@
+# GitHub Actions Workflow: Deploy Backend to Render
+# This workflow deploys the FastAPI backend to Render.com
+# Requires: RENDER_API_KEY and RENDER_SERVICE_ID as repository secrets
+
+name: Deploy Backend to Render
+
+on:
+  # Trigger on push to main branch when backend files change
+  push:
+    branches:
+      - main
+    paths:
+      - 'backend/**'
+      - '.github/workflows/deploy-backend.yml'
+  
+  # Allow manual trigger from Actions tab
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to Render
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+          RENDER_SERVICE_ID: ${{ secrets.RENDER_SERVICE_ID }}
+        run: |
+          if [ -z "$RENDER_API_KEY" ] || [ -z "$RENDER_SERVICE_ID" ]; then
+            echo "⚠️ Render credentials not configured."
+            echo "Please set RENDER_API_KEY and RENDER_SERVICE_ID in repository secrets."
+            echo ""
+            echo "📝 Setup Instructions:"
+            echo "1. Create account at https://render.com"
+            echo "2. Create a new Web Service connected to this repo"
+            echo "3. Get your API key from Account Settings → API Keys"
+            echo "4. Get Service ID from the service URL (srv-xxxxxxxxxx)"
+            echo "5. Add both as repository secrets in GitHub"
+            exit 0
+          fi
+
+          echo "🚀 Triggering deployment on Render..."
+          
+          response=$(curl -s -w "\n%{http_code}" -X POST \
+            "https://api.render.com/v1/services/${RENDER_SERVICE_ID}/deploys" \
+            -H "Authorization: Bearer ${RENDER_API_KEY}" \
+            -H "Content-Type: application/json")
+          
+          http_code=$(echo "$response" | tail -n1)
+          body=$(echo "$response" | head -n-1)
+          
+          if [ "$http_code" = "201" ] || [ "$http_code" = "200" ]; then
+            echo "✅ Deployment triggered successfully!"
+            echo "📦 Response: $body"
+            echo ""
+            echo "🔗 Check deployment status at: https://dashboard.render.com"
+          else
+            echo "❌ Deployment failed with status: $http_code"
+            echo "Response: $body"
+            exit 1
+          fi
+
+      - name: Deployment summary
+        run: |
+          echo ""
+          echo "📋 Deployment Summary"
+          echo "━━━━━━━━━━━━━━━━━━━━━━"
+          echo "Branch: main"
+          echo "Commit: ${{ github.sha }}"
+          echo "Triggered by: ${{ github.actor }}"
