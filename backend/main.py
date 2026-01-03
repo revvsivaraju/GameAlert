@@ -101,6 +101,21 @@ def get_schedule_file_path(sport: str, category: str, team: str) -> Optional[Pat
     if schedule_path.exists():
         return schedule_path
     
+    # NEW: Try common sport schedule file (e.g., F1_Schedule.json)
+    common_team_filename = sport_folder + "_Schedule.json"
+    if category_folder:
+        common_path = project_root / f"Schedules/{sport_folder}/{category_folder}/{common_team_filename}"
+    else:
+        common_path = project_root / f"Schedules/{sport_folder}/{common_team_filename}"
+    
+    if common_path.exists():
+        return common_path
+
+    # FALLBACK for root directory of sport
+    root_common_path = project_root / f"Schedules/{sport_folder}/{common_team_filename}"
+    if root_common_path.exists():
+        return root_common_path
+    
     # FALLBACK: Try looking in subdirectories (old structure)
     if category_folder:
         team_dir = project_root / f"Schedules/{sport_folder}/{category_folder}/{team}"

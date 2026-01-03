@@ -1,20 +1,50 @@
 [
     {
-        "date": "2026-03-20",
-        "time": "19:00",
+        "date": "2026-03-25",
+        "time": "20:45",
         "team(home)": "Portugal",
         "opponent(away)": "TBD",
         "location": "National Stadium",
-        "competition": "Friendly",
-        "matchday": "International Friendly"
+        "competition": "International Friendly"
     },
     {
-        "date": "2026-03-25",
-        "time": "20:00",
+        "date": "2026-06-12",
+        "time": "18:00",
+        "team(home)": "Portugal",
+        "opponent(away)": "TBD",
+        "location": "World Cup Stadium A",
+        "competition": "FIFA World Cup 2026"
+    },
+    {
+        "date": "2026-06-18",
+        "time": "21:00",
         "team(home)": "TBD",
         "opponent(away)": "Portugal",
-        "location": "Away Stadium",
-        "competition": "World Cup Qualifier",
-        "matchday": "Qualifier Match"
+        "location": "World Cup Stadium B",
+        "competition": "FIFA World Cup 2026"
+    },
+    {
+        "date": "2026-06-25",
+        "time": "18:00",
+        "team(home)": "Portugal",
+        "opponent(away)": "TBD",
+        "location": "World Cup Stadium C",
+        "competition": "FIFA World Cup 2026"
+    },
+    {
+        "date": "2026-07-02",
+        "time": "20:00",
+        "team(home)": "Portugal",
+        "opponent(away)": "TBD",
+        "location": "TBD",
+        "competition": "FIFA World Cup 2026"
+    },
+    {
+        "date": "2026-10-10",
+        "time": "19:45",
+        "team(home)": "TBD",
+        "opponent(away)": "Portugal",
+        "location": "European Stadium",
+        "competition": "Continental Qualifiers"
     }
 ]

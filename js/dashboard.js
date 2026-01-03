@@ -205,16 +205,24 @@ function loadTeamSelectorOptions(sport, currentSelections) {
 
         category.options.forEach(option => {
             const isChecked = currentTeams.has(option.name);
+            // Handle logo or flag
+            let displayContent;
+            if (option.logo) {
+                displayContent = `<span class="team-logo"><img src="${option.logo}" alt="${option.name}" onerror="this.parentElement.innerHTML='${option.flag || ''}'" width="20" height="20"></span>`;
+            } else {
+                displayContent = `<span class="team-flag">${option.flag || ''}</span>`;
+            }
+
             html += `<label class="team-checkbox-label">
-                <input type="checkbox" 
-                       class="team-checkbox" 
-                       data-sport="${sport}" 
-                       data-category="${categoryKey}" 
-                       data-team="${option.name}" 
-                       ${isChecked ? 'checked' : ''}>
-                <span class="team-flag">${option.flag}</span>
-                <span class="team-name">${option.name}</span>
-            </label>`;
+                    <input type="checkbox" 
+                           class="team-checkbox" 
+                           data-sport="${sport}" 
+                           data-category="${categoryKey}" 
+                           data-team="${option.name}" 
+                           ${isChecked ? 'checked' : ''}>
+                    ${displayContent}
+                    <span class="team-name">${option.name}</span>
+                </label>`;
         });
 
         html += `</div></div>`;

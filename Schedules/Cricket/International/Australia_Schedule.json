@@ -1,20 +1,146 @@
 [
     {
-        "date": "2026-02-10",
+        "date": "2026-02-15",
+        "time": "14:30",
+        "team(home)": "Pakistan",
+        "opponent(away)": "Australia",
+        "location": "Karachi",
+        "series": "Australia Tour of Pakistan",
+        "format": "ODI"
+    },
+    {
+        "date": "2026-02-18",
+        "time": "14:30",
+        "team(home)": "Pakistan",
+        "opponent(away)": "Australia",
+        "location": "Lahore",
+        "series": "Australia Tour of Pakistan",
+        "format": "ODI"
+    },
+    {
+        "date": "2026-02-21",
+        "time": "14:30",
+        "team(home)": "Pakistan",
+        "opponent(away)": "Australia",
+        "location": "Rawalpindi",
+        "series": "Australia Tour of Pakistan",
+        "format": "ODI"
+    },
+    {
+        "date": "2026-02-24",
+        "time": "19:00",
+        "team(home)": "Pakistan",
+        "opponent(away)": "Australia",
+        "location": "Karachi",
+        "series": "Australia Tour of Pakistan",
+        "format": "T20I"
+    },
+    {
+        "date": "2026-02-26",
+        "time": "19:00",
+        "team(home)": "Pakistan",
+        "opponent(away)": "Australia",
+        "location": "Lahore",
+        "series": "Australia Tour of Pakistan",
+        "format": "T20I"
+    },
+    {
+        "date": "2026-02-28",
+        "time": "19:00",
+        "team(home)": "Pakistan",
+        "opponent(away)": "Australia",
+        "location": "Rawalpindi",
+        "series": "Australia Tour of Pakistan",
+        "format": "T20I"
+    },
+    {
+        "date": "2026-03-05",
         "time": "09:30",
         "team(home)": "Australia",
-        "opponent(away)": "TBD",
-        "location": "Home Ground",
-        "series": "Test Series",
+        "opponent(away)": "Ireland",
+        "location": "Colombo",
+        "series": "ICC T20 World Cup 2026",
+        "format": "T20I"
+    },
+    {
+        "date": "2026-03-09",
+        "time": "09:30",
+        "team(home)": "Australia",
+        "opponent(away)": "Zimbabwe",
+        "location": "Kandy",
+        "series": "ICC T20 World Cup 2026",
+        "format": "T20I"
+    },
+    {
+        "date": "2026-03-12",
+        "time": "19:00",
+        "team(home)": "Sri Lanka",
+        "opponent(away)": "Australia",
+        "location": "Colombo",
+        "series": "ICC T20 World Cup 2026",
+        "format": "T20I"
+    },
+    {
+        "date": "2026-03-16",
+        "time": "14:00",
+        "team(home)": "Australia",
+        "opponent(away)": "Oman",
+        "location": "Dambulla",
+        "series": "ICC T20 World Cup 2026",
+        "format": "T20I"
+    },
+    {
+        "date": "2026-06-10",
+        "time": "14:00",
+        "team(home)": "Bangladesh",
+        "opponent(away)": "Australia",
+        "location": "Dhaka",
+        "series": "Australia Tour of Bangladesh",
+        "format": "ODI"
+    },
+    {
+        "date": "2026-06-13",
+        "time": "14:00",
+        "team(home)": "Bangladesh",
+        "opponent(away)": "Australia",
+        "location": "Chittagong",
+        "series": "Australia Tour of Bangladesh",
+        "format": "ODI"
+    },
+    {
+        "date": "2026-06-16",
+        "time": "14:00",
+        "team(home)": "Bangladesh",
+        "opponent(away)": "Australia",
+        "location": "Dhaka",
+        "series": "Australia Tour of Bangladesh",
+        "format": "ODI"
+    },
+    {
+        "date": "2026-09-15",
+        "time": "10:00",
+        "team(home)": "South Africa",
+        "opponent(away)": "Australia",
+        "location": "Johannesburg",
+        "series": "Australia Tour of South Africa",
         "format": "Test"
     },
     {
-        "date": "2026-02-20",
-        "time": "14:00",
-        "team(home)": "Australia",
-        "opponent(away)": "TBD",
-        "location": "Home Ground",
-        "series": "ODI Series",
-        "format": "ODI"
+        "date": "2026-09-25",
+        "time": "10:00",
+        "team(home)": "South Africa",
+        "opponent(away)": "Australia",
+        "location": "Cape Town",
+        "series": "Australia Tour of South Africa",
+        "format": "Test"
+    },
+    {
+        "date": "2026-10-05",
+        "time": "10:00",
+        "team(home)": "South Africa",
+        "opponent(away)": "Australia",
+        "location": "Durban",
+        "series": "Australia Tour of South Africa",
+        "format": "Test"
     }
 ]

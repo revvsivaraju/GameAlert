@@ -75,14 +75,14 @@ const sportData = {
                 options: [
                     { name: 'Mumbai Indians', logo: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Mumbai_Indians_Logo.svg' },
                     { name: 'Chennai Super Kings', logo: 'https://upload.wikimedia.org/wikipedia/en/2/2b/Chennai_Super_Kings_Logo.svg' },
-                    { name: 'Royal Challengers Bangalore', logo: 'https://upload.wikimedia.org/wikipedia/en/3/34/Royal_Challengers_Bengaluru_Logo_2024.svg' },
+                    { name: 'Royal Challengers Bangalore', logo: 'https://upload.wikimedia.org/wikipedia/en/d/d4/Royal_Challengers_Bengaluru_Logo.svg' },
                     { name: 'Kolkata Knight Riders', logo: 'https://upload.wikimedia.org/wikipedia/en/4/4c/Kolkata_Knight_Riders_Logo.svg' },
-                    { name: 'Delhi Capitals', logo: 'https://upload.wikimedia.org/wikipedia/en/f/f5/Delhi_Capitals_Logo.svg' },
-                    { name: 'Sunrisers Hyderabad', logo: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Sunrisers_Hyderabad.svg' },
-                    { name: 'Rajasthan Royals', logo: 'https://upload.wikimedia.org/wikipedia/en/6/60/Rajasthan_Royals_Logo.svg' },
+                    { name: 'Delhi Capitals', logo: 'https://upload.wikimedia.org/wikipedia/commons/c/c5/Delhi_Capitals_Logo.png' },
+                    { name: 'Sunrisers Hyderabad', logo: 'https://upload.wikimedia.org/wikipedia/en/5/51/Sunrisers_Hyderabad_Logo.svg' },
+                    { name: 'Rajasthan Royals', logo: 'https://upload.wikimedia.org/wikipedia/en/5/5c/This_is_the_logo_for_Rajasthan_Royals%2C_a_cricket_team_playing_in_the_Indian_Premier_League_%28IPL%29.svg' },
                     { name: 'Punjab Kings', logo: 'https://upload.wikimedia.org/wikipedia/en/d/d4/Punjab_Kings_Logo.svg' },
                     { name: 'Gujarat Titans', logo: 'https://upload.wikimedia.org/wikipedia/en/0/09/Gujarat_Titans_Logo.svg' },
-                    { name: 'Lucknow Super Giants', logo: 'https://upload.wikimedia.org/wikipedia/en/5/55/Lucknow_Super_Giants_IPL_Logo.svg' }
+                    { name: 'Lucknow Super Giants', logo: 'https://upload.wikimedia.org/wikipedia/en/a/a9/Lucknow_Super_Giants_IPL_Logo.svg' }
                 ]
             }
         }
@@ -90,41 +90,11 @@ const sportData = {
     f1: {
         title: 'Formula 1',
         categories: {
-            teams: {
-                name: 'Teams',
-                subtitle: 'Select teams you want to follow',
+            season: {
+                name: 'Season',
+                subtitle: 'Follow the 2026 F1 Season',
                 options: [
-                    { name: 'Ferrari', logo: 'https://upload.wikimedia.org/wikipedia/en/c/c0/Scuderia_Ferrari_Logo.svg' },
-                    { name: 'Mercedes', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Mercedes_AMG_Petronas_F1_Logo.svg' },
-                    { name: 'Red Bull', logo: 'https://upload.wikimedia.org/wikipedia/en/f/f0/Red_Bull_Racing_logo.svg' },
-                    { name: 'McLaren', logo: 'https://upload.wikimedia.org/wikipedia/en/6/66/McLaren_Racing_logo.svg' },
-                    { name: 'Alpine', logo: 'https://upload.wikimedia.org/wikipedia/en/e/e6/Alpine_F1_Team_Logo.svg' },
-                    { name: 'Aston Martin', logo: 'https://upload.wikimedia.org/wikipedia/en/a/af/Aston_Martin_Aramco_Logo.svg' },
-                    { name: 'RB', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/Visa_Cash_App_RB_F1_Team_logo.svg' },
-                    { name: 'Kick Sauber', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Stake_F1_Team_Kick_Sauber_logo.svg' },
-                    { name: 'Haas', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/MoneyGram_Haas_F1_Team_logo.svg' },
-                    { name: 'Williams', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Williams_Racing_2020_logo.svg' }
-                ]
-            },
-            drivers: {
-                name: 'Drivers',
-                subtitle: 'Select drivers you want to follow',
-                options: [
-                    { name: 'Max Verstappen', flag: '🇳🇱', team: 'Red Bull' },
-                    { name: 'Lewis Hamilton', flag: '🇬🇧', team: 'Ferrari' },
-                    { name: 'Charles Leclerc', flag: '🇲🇨', team: 'Ferrari' },
-                    { name: 'Carlos Sainz', flag: '🇪🇸', team: 'Williams' },
-                    { name: 'Lando Norris', flag: '🇬🇧', team: 'McLaren' },
-                    { name: 'George Russell', flag: '🇬🇧', team: 'Mercedes' },
-                    { name: 'Fernando Alonso', flag: '🇪🇸', team: 'Aston Martin' },
-                    { name: 'Sergio Perez', flag: '🇲🇽', team: 'Red Bull' },
-                    { name: 'Oscar Piastri', flag: '🇦🇺', team: 'McLaren' },
-                    { name: 'Pierre Gasly', flag: '🇫🇷', team: 'Alpine' },
-                    { name: 'Esteban Ocon', flag: '🇫🇷', team: 'Haas' },
-                    { name: 'Lance Stroll', flag: '🇨🇦', team: 'Aston Martin' },
-                    { name: 'Yuki Tsunoda', flag: '🇯🇵', team: 'RB' },
-                    { name: 'Nico Hulkenberg', flag: '🇩🇪', team: 'Kick Sauber' },
-                    { name: 'Kevin Magnussen', flag: '🇩🇰', team: 'Haas' }
+                    { name: '2026 Season', logo: 'https://upload.wikimedia.org/wikipedia/commons/3/33/F1.svg' }
                 ]
             }
         }
@@ -280,9 +250,9 @@ function loadCategoryOptions(sport, category, categoryData) {
             // Determine what to display in the card - logo or flag
             let displayContent;
             if (option.logo) {
-                displayContent = `<div class="option-logo"><img src="${option.logo}" alt="${option.name}" onerror="this.parentElement.innerHTML='${option.flag || '🏆'}'"></div>`;
+                displayContent = `<div class="option-logo"><img src="${option.logo}" alt="${option.name}" onerror="this.parentElement.innerHTML='${option.flag || ''}'"></div>`;
             } else {
-                displayContent = `<div class="option-flag">${option.flag || '🏆'}</div>`;
+                displayContent = `<div class="option-flag">${option.flag || ''}</div>`;
             }
 
             card.innerHTML = `

@@ -1,0 +1,650 @@
+[
+    {
+        "date": "2026-03-06",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Albert Park Circuit, Melbourne",
+        "competition": "Australian Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-03-07",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Albert Park Circuit, Melbourne",
+        "competition": "Australian Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-03-08",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Albert Park Circuit, Melbourne",
+        "competition": "Australian Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-03-13",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Shanghai International Circuit",
+        "competition": "Chinese Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-03-14",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Shanghai International Circuit",
+        "competition": "Chinese Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-03-15",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Shanghai International Circuit",
+        "competition": "Chinese Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-03-27",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Suzuka International Racing Course",
+        "competition": "Japanese Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-03-28",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Suzuka International Racing Course",
+        "competition": "Japanese Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-03-29",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Suzuka International Racing Course",
+        "competition": "Japanese Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-04-10",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Bahrain International Circuit",
+        "competition": "Bahrain Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-04-11",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Bahrain International Circuit",
+        "competition": "Bahrain Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-04-12",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Bahrain International Circuit",
+        "competition": "Bahrain Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-04-17",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Jeddah Corniche Circuit",
+        "competition": "Saudi Arabian Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-04-18",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Jeddah Corniche Circuit",
+        "competition": "Saudi Arabian Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-04-19",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Jeddah Corniche Circuit",
+        "competition": "Saudi Arabian Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-05-01",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Miami International Autodrome",
+        "competition": "Miami Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-05-02",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Miami International Autodrome",
+        "competition": "Miami Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-05-03",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Miami International Autodrome",
+        "competition": "Miami Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-05-22",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit Gilles Villeneuve, Montreal",
+        "competition": "Canadian Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-05-23",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit Gilles Villeneuve, Montreal",
+        "competition": "Canadian Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-05-24",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit Gilles Villeneuve, Montreal",
+        "competition": "Canadian Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-06-05",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Monaco",
+        "competition": "Monaco Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-06-06",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Monaco",
+        "competition": "Monaco Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-06-07",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Monaco",
+        "competition": "Monaco Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-06-12",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Barcelona-Catalunya",
+        "competition": "Spanish Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-06-13",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Barcelona-Catalunya",
+        "competition": "Spanish Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-06-14",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Barcelona-Catalunya",
+        "competition": "Spanish Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-06-26",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Red Bull Ring, Spielberg",
+        "competition": "Austrian Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-06-27",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Red Bull Ring, Spielberg",
+        "competition": "Austrian Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-06-28",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Red Bull Ring, Spielberg",
+        "competition": "Austrian Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-07-03",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Silverstone Circuit",
+        "competition": "British Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-07-04",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Silverstone Circuit",
+        "competition": "British Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-07-05",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Silverstone Circuit",
+        "competition": "British Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-07-17",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Spa-Francorchamps",
+        "competition": "Belgian Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-07-18",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Spa-Francorchamps",
+        "competition": "Belgian Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-07-19",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit de Spa-Francorchamps",
+        "competition": "Belgian Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-07-24",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Hungaroring, Budapest",
+        "competition": "Hungarian Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-07-25",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Hungaroring, Budapest",
+        "competition": "Hungarian Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-07-26",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Hungaroring, Budapest",
+        "competition": "Hungarian Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-08-21",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit Zandvoort",
+        "competition": "Dutch Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-08-22",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit Zandvoort",
+        "competition": "Dutch Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-08-23",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit Zandvoort",
+        "competition": "Dutch Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-09-04",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Nazionale Monza",
+        "competition": "Italian Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-09-05",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Nazionale Monza",
+        "competition": "Italian Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-09-06",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Nazionale Monza",
+        "competition": "Italian Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-09-11",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Madrid Street Circuit",
+        "competition": "Spanish Grand Prix (Madrid)",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-09-12",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Madrid Street Circuit",
+        "competition": "Spanish Grand Prix (Madrid)",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-09-13",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Madrid Street Circuit",
+        "competition": "Spanish Grand Prix (Madrid)",
+        "session": "Race"
+    },
+    {
+        "date": "2026-09-25",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Baku City Circuit",
+        "competition": "Azerbaijan Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-09-26",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Baku City Circuit",
+        "competition": "Azerbaijan Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-09-27",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Baku City Circuit",
+        "competition": "Azerbaijan Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-10-09",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Marina Bay Street Circuit",
+        "competition": "Singapore Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-10-10",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Marina Bay Street Circuit",
+        "competition": "Singapore Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-10-11",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Marina Bay Street Circuit",
+        "competition": "Singapore Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-10-23",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit of the Americas, Austin",
+        "competition": "United States Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-10-24",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit of the Americas, Austin",
+        "competition": "United States Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-10-25",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Circuit of the Americas, Austin",
+        "competition": "United States Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-10-30",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Hermanos Rodriguez",
+        "competition": "Mexican Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-10-31",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Hermanos Rodriguez",
+        "competition": "Mexican Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-11-01",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Hermanos Rodriguez",
+        "competition": "Mexican Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-11-06",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Jose Carlos Pace, Interlagos",
+        "competition": "Brazilian Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-11-07",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Jose Carlos Pace, Interlagos",
+        "competition": "Brazilian Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-11-08",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Autodromo Jose Carlos Pace, Interlagos",
+        "competition": "Brazilian Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-11-20",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Las Vegas Strip Circuit",
+        "competition": "Las Vegas Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-11-21",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Las Vegas Strip Circuit",
+        "competition": "Las Vegas Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-11-22",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Las Vegas Strip Circuit",
+        "competition": "Las Vegas Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-11-27",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Lusail International Circuit",
+        "competition": "Qatar Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-11-28",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Lusail International Circuit",
+        "competition": "Qatar Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-11-29",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Lusail International Circuit",
+        "competition": "Qatar Grand Prix",
+        "session": "Race"
+    },
+    {
+        "date": "2026-12-04",
+        "time": "14:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Yas Marina Circuit",
+        "competition": "Abu Dhabi Grand Prix",
+        "session": "Free Practice 1"
+    },
+    {
+        "date": "2026-12-05",
+        "time": "18:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Yas Marina Circuit",
+        "competition": "Abu Dhabi Grand Prix",
+        "session": "Qualifying"
+    },
+    {
+        "date": "2026-12-06",
+        "time": "15:00",
+        "team(home)": "All Teams",
+        "opponent(away)": "All Teams",
+        "location": "Yas Marina Circuit",
+        "competition": "Abu Dhabi Grand Prix",
+        "session": "Race"
+    }
+]

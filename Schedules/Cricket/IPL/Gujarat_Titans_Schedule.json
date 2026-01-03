@@ -1,19 +1,46 @@
 [
     {
-        "date": "2026-04-05",
+        "date": "2026-03-25",
         "time": "19:30",
         "team(home)": "Gujarat Titans",
         "opponent(away)": "TBD",
-        "location": "Home Stadium",
+        "location": "Official Stadium",
         "series": "IPL 2026",
         "format": "T20"
     },
     {
-        "date": "2026-04-10",
-        "time": "15:30",
+        "date": "2026-04-05",
+        "time": "19:30",
         "team(home)": "TBD",
         "opponent(away)": "Gujarat Titans",
-        "location": "Away Stadium",
+        "location": "Away Ground",
+        "series": "IPL 2026",
+        "format": "T20"
+    },
+    {
+        "date": "2026-04-15",
+        "time": "19:30",
+        "team(home)": "Gujarat Titans",
+        "opponent(away)": "TBD",
+        "location": "Official Stadium",
+        "series": "IPL 2026",
+        "format": "T20"
+    },
+    {
+        "date": "2026-04-25",
+        "time": "15:30",
+        "team(home)": "Gujarat Titans",
+        "opponent(away)": "TBD",
+        "location": "Official Stadium",
+        "series": "IPL 2026",
+        "format": "T20"
+    },
+    {
+        "date": "2026-05-10",
+        "time": "19:30",
+        "team(home)": "TBD",
+        "opponent(away)": "Gujarat Titans",
+        "location": "Away Ground",
         "series": "IPL 2026",
         "format": "T20"
     }

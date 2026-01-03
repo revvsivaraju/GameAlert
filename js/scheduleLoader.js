@@ -83,8 +83,8 @@
 
                 // Check if selected team is in this match
                 const teamNormalized = team.trim().toLowerCase();
-                const isHomeTeam = homeTeam.toLowerCase() === teamNormalized;
-                const isAwayTeam = awayTeam.toLowerCase() === teamNormalized;
+                const isHomeTeam = homeTeam.toLowerCase() === teamNormalized || homeTeam === 'All Teams';
+                const isAwayTeam = awayTeam.toLowerCase() === teamNormalized || awayTeam === 'All Teams';
 
                 // If selected team is not in this match, skip it
                 if (!isHomeTeam && !isAwayTeam) {
@@ -93,11 +93,15 @@
 
                 // Set team1 as the selected team, team2 as the opponent
                 let team1, team2;
-                if (isHomeTeam) {
-                    team1 = homeTeam;
+                if (sport.toLowerCase() === 'f1') {
+                    // For F1, use the team name and the session/competition
+                    team1 = team;
+                    team2 = row.session ? `${row.competition} (${row.session})` : row.competition;
+                } else if (isHomeTeam) {
+                    team1 = homeTeam === 'All Teams' ? team : homeTeam;
                     team2 = awayTeam;
                 } else {
-                    team1 = awayTeam;
+                    team1 = awayTeam === 'All Teams' ? team : awayTeam;
                     team2 = homeTeam;
                 }
 

@@ -1,20 +1,38 @@
 [
     {
-        "date": "2026-02-10",
-        "time": "09:30",
+        "date": "2026-01-10",
+        "time": "10:00",
         "team(home)": "England",
         "opponent(away)": "TBD",
-        "location": "Home Ground",
-        "series": "Test Series",
+        "location": "Main Stadium",
+        "series": "Series 1",
         "format": "Test"
     },
     {
-        "date": "2026-02-20",
+        "date": "2026-03-01",
+        "time": "19:00",
+        "team(home)": "England",
+        "opponent(away)": "TBD",
+        "location": "Venues TBD",
+        "series": "ICC T20 World Cup 2026",
+        "format": "T20I"
+    },
+    {
+        "date": "2026-08-15",
         "time": "14:00",
         "team(home)": "England",
         "opponent(away)": "TBD",
-        "location": "Home Ground",
-        "series": "ODI Series",
+        "location": "Ground A",
+        "series": "Bilateral Series",
         "format": "ODI"
+    },
+    {
+        "date": "2026-11-20",
+        "time": "19:00",
+        "team(home)": "England",
+        "opponent(away)": "TBD",
+        "location": "Stadium B",
+        "series": "T20 Global Series",
+        "format": "T20I"
     }
 ]
