@@ -1,4 +1,5 @@
 // Sport-specific data with categories
+// Using official team logos from reliable CDN sources
 const sportData = {
     football: {
         title: 'Football',
@@ -7,42 +8,42 @@ const sportData = {
                 name: 'Club',
                 subtitle: 'Select clubs you want to follow',
                 options: [
-                    { name: 'Real Madrid', flag: '⚪' },
-                    { name: 'Barcelona', flag: '🔵' },
-                    { name: 'Manchester United', flag: '🔴' },
-                    { name: 'Liverpool', flag: '🔴' },
-                    { name: 'Manchester City', flag: '🔵' },
-                    { name: 'Chelsea', flag: '🔵' },
-                    { name: 'Arsenal', flag: '🔴' },
-                    { name: 'Bayern Munich', flag: '🔴' },
-                    { name: 'Paris Saint-Germain', flag: '🔵' },
-                    { name: 'Juventus', flag: '⚫' },
-                    { name: 'AC Milan', flag: '🔴' },
-                    { name: 'Inter Milan', flag: '🔵' },
-                    { name: 'Atletico Madrid', flag: '🔴' },
-                    { name: 'Borussia Dortmund', flag: '🟡' },
-                    { name: 'Tottenham', flag: '⚪' }
+                    { name: 'Real Madrid', logo: 'https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg' },
+                    { name: 'Barcelona', logo: 'https://upload.wikimedia.org/wikipedia/en/4/47/FC_Barcelona_%28crest%29.svg' },
+                    { name: 'Manchester United', logo: 'https://upload.wikimedia.org/wikipedia/en/7/7a/Manchester_United_FC_crest.svg' },
+                    { name: 'Liverpool', logo: 'https://upload.wikimedia.org/wikipedia/en/0/0c/Liverpool_FC.svg' },
+                    { name: 'Manchester City', logo: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Manchester_City_FC_badge.svg' },
+                    { name: 'Chelsea', logo: 'https://upload.wikimedia.org/wikipedia/en/c/cc/Chelsea_FC.svg' },
+                    { name: 'Arsenal', logo: 'https://upload.wikimedia.org/wikipedia/en/5/53/Arsenal_FC.svg' },
+                    { name: 'Bayern Munich', logo: 'https://upload.wikimedia.org/wikipedia/commons/1/1b/FC_Bayern_M%C3%BCnchen_logo_%282017%29.svg' },
+                    { name: 'Paris Saint-Germain', logo: 'https://upload.wikimedia.org/wikipedia/en/a/a7/Paris_Saint-Germain_F.C..svg' },
+                    { name: 'Juventus', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Juventus_FC_-_pictogram_black_%28Italy%2C_2017%29.svg' },
+                    { name: 'AC Milan', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d0/Logo_of_AC_Milan.svg' },
+                    { name: 'Inter Milan', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/05/FC_Internazionale_Milano_2021.svg' },
+                    { name: 'Atletico Madrid', logo: 'https://upload.wikimedia.org/wikipedia/en/f/f4/Atletico_Madrid_2017_logo.svg' },
+                    { name: 'Borussia Dortmund', logo: 'https://upload.wikimedia.org/wikipedia/commons/6/67/Borussia_Dortmund_logo.svg' },
+                    { name: 'Tottenham', logo: 'https://upload.wikimedia.org/wikipedia/en/b/b4/Tottenham_Hotspur.svg' }
                 ]
             },
             international: {
                 name: 'International',
                 subtitle: 'Select countries you want to follow',
                 options: [
-                    { name: 'Brazil', flag: '🇧🇷' },
-                    { name: 'Argentina', flag: '🇦🇷' },
-                    { name: 'France', flag: '🇫🇷' },
-                    { name: 'Germany', flag: '🇩🇪' },
-                    { name: 'Spain', flag: '🇪🇸' },
-                    { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-                    { name: 'Italy', flag: '🇮🇹' },
-                    { name: 'Portugal', flag: '🇵🇹' },
-                    { name: 'Netherlands', flag: '🇳🇱' },
-                    { name: 'Belgium', flag: '🇧🇪' },
-                    { name: 'Croatia', flag: '🇭🇷' },
-                    { name: 'Uruguay', flag: '🇺🇾' },
-                    { name: 'Mexico', flag: '🇲🇽' },
-                    { name: 'Japan', flag: '🇯🇵' },
-                    { name: 'South Korea', flag: '🇰🇷' }
+                    { name: 'Brazil', flag: '🇧🇷', logo: 'https://upload.wikimedia.org/wikipedia/en/1/1b/CBF_logo_2018.svg' },
+                    { name: 'Argentina', flag: '🇦🇷', logo: 'https://upload.wikimedia.org/wikipedia/en/c/c1/Argentina_national_football_team_logo.svg' },
+                    { name: 'France', flag: '🇫🇷', logo: 'https://upload.wikimedia.org/wikipedia/en/6/62/French_Football_Federation_Logo.svg' },
+                    { name: 'Germany', flag: '🇩🇪', logo: 'https://upload.wikimedia.org/wikipedia/en/e/e3/DFB-Logo.svg' },
+                    { name: 'Spain', flag: '🇪🇸', logo: 'https://upload.wikimedia.org/wikipedia/en/4/4a/Royal_Spanish_Football_Federation_logo.svg' },
+                    { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', logo: 'https://upload.wikimedia.org/wikipedia/en/b/be/Football_Association_England_logo.svg' },
+                    { name: 'Italy', flag: '🇮🇹', logo: 'https://upload.wikimedia.org/wikipedia/en/e/e4/Italian_Football_Federation.svg' },
+                    { name: 'Portugal', flag: '🇵🇹', logo: 'https://upload.wikimedia.org/wikipedia/en/0/05/Portuguese_Football_Federation.svg' },
+                    { name: 'Netherlands', flag: '🇳🇱', logo: 'https://upload.wikimedia.org/wikipedia/en/5/5c/Royal_Dutch_Football_Association_logo.svg' },
+                    { name: 'Belgium', flag: '🇧🇪', logo: 'https://upload.wikimedia.org/wikipedia/en/4/4c/Royal_Belgian_Football_Association_logo.svg' },
+                    { name: 'Croatia', flag: '🇭🇷', logo: 'https://upload.wikimedia.org/wikipedia/en/5/5e/Croatian_Football_Federation_logo.svg' },
+                    { name: 'Uruguay', flag: '🇺🇾', logo: 'https://upload.wikimedia.org/wikipedia/en/4/40/Uruguayan_Football_Association_logo.svg' },
+                    { name: 'Mexico', flag: '🇲🇽', logo: 'https://upload.wikimedia.org/wikipedia/en/9/9e/Mexico_national_football_team_seal.svg' },
+                    { name: 'Japan', flag: '🇯🇵', logo: 'https://upload.wikimedia.org/wikipedia/en/0/0f/Japan_Football_Association_logo.svg' },
+                    { name: 'South Korea', flag: '🇰🇷', logo: 'https://upload.wikimedia.org/wikipedia/en/e/ec/Korea_Football_Association.svg' }
                 ]
             }
         }
@@ -54,34 +55,34 @@ const sportData = {
                 name: 'International',
                 subtitle: 'Select countries you want to follow',
                 options: [
-                    { name: 'India', flag: '🇮🇳' },
-                    { name: 'Australia', flag: '🇦🇺' },
-                    { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿' },
-                    { name: 'Pakistan', flag: '🇵🇰' },
-                    { name: 'South Africa', flag: '🇿🇦' },
-                    { name: 'New Zealand', flag: '🇳🇿' },
-                    { name: 'West Indies', flag: '🏝️' },
-                    { name: 'Sri Lanka', flag: '🇱🇰' },
-                    { name: 'Bangladesh', flag: '🇧🇩' },
-                    { name: 'Afghanistan', flag: '🇦🇫' },
-                    { name: 'Ireland', flag: '🇮🇪' },
-                    { name: 'Zimbabwe', flag: '🇿🇼' }
+                    { name: 'India', flag: '🇮🇳', logo: 'https://upload.wikimedia.org/wikipedia/en/8/8d/BCCI_logo.svg' },
+                    { name: 'Australia', flag: '🇦🇺', logo: 'https://upload.wikimedia.org/wikipedia/en/3/3f/Cricket_Australia.svg' },
+                    { name: 'England', flag: '🏴󠁧󠁢󠁥󠁮󠁧󠁿', logo: 'https://upload.wikimedia.org/wikipedia/en/f/fd/England_and_Wales_Cricket_Board_logo.svg' },
+                    { name: 'Pakistan', flag: '🇵🇰', logo: 'https://upload.wikimedia.org/wikipedia/en/3/36/Pakistan_Cricket_Board_logo.svg' },
+                    { name: 'South Africa', flag: '🇿🇦', logo: 'https://upload.wikimedia.org/wikipedia/en/2/28/Cricket_South_Africa_logo.svg' },
+                    { name: 'New Zealand', flag: '🇳🇿', logo: 'https://upload.wikimedia.org/wikipedia/en/b/bd/New_Zealand_Cricket_logo.svg' },
+                    { name: 'West Indies', flag: '🏝️', logo: 'https://upload.wikimedia.org/wikipedia/en/a/a0/Cricket_West_Indies_Logo_%282017%29.svg' },
+                    { name: 'Sri Lanka', flag: '🇱🇰', logo: 'https://upload.wikimedia.org/wikipedia/en/4/4d/Sri_Lanka_Cricket.svg' },
+                    { name: 'Bangladesh', flag: '🇧🇩', logo: 'https://upload.wikimedia.org/wikipedia/en/d/d2/Bangladesh_Cricket_Board.svg' },
+                    { name: 'Afghanistan', flag: '🇦🇫', logo: 'https://upload.wikimedia.org/wikipedia/en/c/c8/Afghanistan_Cricket_Board_logo.svg' },
+                    { name: 'Ireland', flag: '🇮🇪', logo: 'https://upload.wikimedia.org/wikipedia/en/8/8e/Cricket_Ireland_logo.svg' },
+                    { name: 'Zimbabwe', flag: '🇿🇼', logo: 'https://upload.wikimedia.org/wikipedia/en/2/2e/Zimbabwe_Cricket_logo.svg' }
                 ]
             },
             ipl: {
                 name: 'IPL',
                 subtitle: 'Select IPL teams you want to follow',
                 options: [
-                    { name: 'Mumbai Indians', flag: '🔵' },
-                    { name: 'Chennai Super Kings', flag: '🟡' },
-                    { name: 'Royal Challengers Bangalore', flag: '🔴' },
-                    { name: 'Kolkata Knight Riders', flag: '🟣' },
-                    { name: 'Delhi Capitals', flag: '🔵' },
-                    { name: 'Sunrisers Hyderabad', flag: '🟠' },
-                    { name: 'Rajasthan Royals', flag: '🩷' },
-                    { name: 'Punjab Kings', flag: '🔴' },
-                    { name: 'Gujarat Titans', flag: '🔵' },
-                    { name: 'Lucknow Super Giants', flag: '🔵' }
+                    { name: 'Mumbai Indians', logo: 'https://upload.wikimedia.org/wikipedia/en/c/cd/Mumbai_Indians_Logo.svg' },
+                    { name: 'Chennai Super Kings', logo: 'https://upload.wikimedia.org/wikipedia/en/2/2b/Chennai_Super_Kings_Logo.svg' },
+                    { name: 'Royal Challengers Bangalore', logo: 'https://upload.wikimedia.org/wikipedia/en/3/34/Royal_Challengers_Bengaluru_Logo_2024.svg' },
+                    { name: 'Kolkata Knight Riders', logo: 'https://upload.wikimedia.org/wikipedia/en/4/4c/Kolkata_Knight_Riders_Logo.svg' },
+                    { name: 'Delhi Capitals', logo: 'https://upload.wikimedia.org/wikipedia/en/f/f5/Delhi_Capitals_Logo.svg' },
+                    { name: 'Sunrisers Hyderabad', logo: 'https://upload.wikimedia.org/wikipedia/en/e/eb/Sunrisers_Hyderabad.svg' },
+                    { name: 'Rajasthan Royals', logo: 'https://upload.wikimedia.org/wikipedia/en/6/60/Rajasthan_Royals_Logo.svg' },
+                    { name: 'Punjab Kings', logo: 'https://upload.wikimedia.org/wikipedia/en/d/d4/Punjab_Kings_Logo.svg' },
+                    { name: 'Gujarat Titans', logo: 'https://upload.wikimedia.org/wikipedia/en/0/09/Gujarat_Titans_Logo.svg' },
+                    { name: 'Lucknow Super Giants', logo: 'https://upload.wikimedia.org/wikipedia/en/5/55/Lucknow_Super_Giants_IPL_Logo.svg' }
                 ]
             }
         }
@@ -93,37 +94,37 @@ const sportData = {
                 name: 'Teams',
                 subtitle: 'Select teams you want to follow',
                 options: [
-                    { name: 'Ferrari', flag: '🔴' },
-                    { name: 'Mercedes', flag: '🔵' },
-                    { name: 'Red Bull', flag: '🔵' },
-                    { name: 'McLaren', flag: '🟠' },
-                    { name: 'Alpine', flag: '🔵' },
-                    { name: 'Aston Martin', flag: '🟢' },
-                    { name: 'AlphaTauri', flag: '🔵' },
-                    { name: 'Alfa Romeo', flag: '🔴' },
-                    { name: 'Haas', flag: '⚪' },
-                    { name: 'Williams', flag: '🔵' }
+                    { name: 'Ferrari', logo: 'https://upload.wikimedia.org/wikipedia/en/c/c0/Scuderia_Ferrari_Logo.svg' },
+                    { name: 'Mercedes', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/fb/Mercedes_AMG_Petronas_F1_Logo.svg' },
+                    { name: 'Red Bull', logo: 'https://upload.wikimedia.org/wikipedia/en/f/f0/Red_Bull_Racing_logo.svg' },
+                    { name: 'McLaren', logo: 'https://upload.wikimedia.org/wikipedia/en/6/66/McLaren_Racing_logo.svg' },
+                    { name: 'Alpine', logo: 'https://upload.wikimedia.org/wikipedia/en/e/e6/Alpine_F1_Team_Logo.svg' },
+                    { name: 'Aston Martin', logo: 'https://upload.wikimedia.org/wikipedia/en/a/af/Aston_Martin_Aramco_Logo.svg' },
+                    { name: 'RB', logo: 'https://upload.wikimedia.org/wikipedia/commons/0/0d/Visa_Cash_App_RB_F1_Team_logo.svg' },
+                    { name: 'Kick Sauber', logo: 'https://upload.wikimedia.org/wikipedia/commons/d/d5/Stake_F1_Team_Kick_Sauber_logo.svg' },
+                    { name: 'Haas', logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a6/MoneyGram_Haas_F1_Team_logo.svg' },
+                    { name: 'Williams', logo: 'https://upload.wikimedia.org/wikipedia/commons/f/f5/Williams_Racing_2020_logo.svg' }
                 ]
             },
             drivers: {
                 name: 'Drivers',
                 subtitle: 'Select drivers you want to follow',
                 options: [
-                    { name: 'Max Verstappen', flag: '🇳🇱' },
-                    { name: 'Lewis Hamilton', flag: '🇬🇧' },
-                    { name: 'Charles Leclerc', flag: '🇲🇨' },
-                    { name: 'Carlos Sainz', flag: '🇪🇸' },
-                    { name: 'Lando Norris', flag: '🇬🇧' },
-                    { name: 'George Russell', flag: '🇬🇧' },
-                    { name: 'Fernando Alonso', flag: '🇪🇸' },
-                    { name: 'Sergio Perez', flag: '🇲🇽' },
-                    { name: 'Oscar Piastri', flag: '🇦🇺' },
-                    { name: 'Pierre Gasly', flag: '🇫🇷' },
-                    { name: 'Esteban Ocon', flag: '🇫🇷' },
-                    { name: 'Lance Stroll', flag: '🇨🇦' },
-                    { name: 'Yuki Tsunoda', flag: '🇯🇵' },
-                    { name: 'Valtteri Bottas', flag: '🇫🇮' },
-                    { name: 'Kevin Magnussen', flag: '🇩🇰' }
+                    { name: 'Max Verstappen', flag: '🇳🇱', team: 'Red Bull' },
+                    { name: 'Lewis Hamilton', flag: '🇬🇧', team: 'Ferrari' },
+                    { name: 'Charles Leclerc', flag: '🇲🇨', team: 'Ferrari' },
+                    { name: 'Carlos Sainz', flag: '🇪🇸', team: 'Williams' },
+                    { name: 'Lando Norris', flag: '🇬🇧', team: 'McLaren' },
+                    { name: 'George Russell', flag: '🇬🇧', team: 'Mercedes' },
+                    { name: 'Fernando Alonso', flag: '🇪🇸', team: 'Aston Martin' },
+                    { name: 'Sergio Perez', flag: '🇲🇽', team: 'Red Bull' },
+                    { name: 'Oscar Piastri', flag: '🇦🇺', team: 'McLaren' },
+                    { name: 'Pierre Gasly', flag: '🇫🇷', team: 'Alpine' },
+                    { name: 'Esteban Ocon', flag: '🇫🇷', team: 'Haas' },
+                    { name: 'Lance Stroll', flag: '🇨🇦', team: 'Aston Martin' },
+                    { name: 'Yuki Tsunoda', flag: '🇯🇵', team: 'RB' },
+                    { name: 'Nico Hulkenberg', flag: '🇩🇪', team: 'Kick Sauber' },
+                    { name: 'Kevin Magnussen', flag: '🇩🇰', team: 'Haas' }
                 ]
             }
         }
@@ -276,8 +277,16 @@ function loadCategoryOptions(sport, category, categoryData) {
             card.setAttribute('data-option', option.name);
             card.style.animationDelay = `${index * 0.05}s`;
 
+            // Determine what to display in the card - logo or flag
+            let displayContent;
+            if (option.logo) {
+                displayContent = `<div class="option-logo"><img src="${option.logo}" alt="${option.name}" onerror="this.parentElement.innerHTML='${option.flag || '🏆'}'"></div>`;
+            } else {
+                displayContent = `<div class="option-flag">${option.flag || '🏆'}</div>`;
+            }
+
             card.innerHTML = `
-                <div class="option-flag">${option.flag}</div>
+                ${displayContent}
                 <p class="option-name">${option.name}</p>
             `;
 
