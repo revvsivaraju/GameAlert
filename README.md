@@ -1,8 +1,21 @@
-# Sports Selection Application
+# 🏆 GameAlert - Sports Selection Application
 
 A modern web application that allows users to select and follow their favorite sports teams and countries, with real-time schedule tracking and match notifications.
 
-## Features
+![Status](https://img.shields.io/badge/status-live-brightgreen)
+![Backend](https://img.shields.io/badge/backend-AWS%20EC2-orange)
+![Frontend](https://img.shields.io/badge/frontend-GitHub%20Pages-blue)
+
+## 🌐 Live Demo
+
+| Service | URL |
+|---------|-----|
+| **Frontend** | [GitHub Pages](https://revvsivaraju.github.io/GameAlert/) |
+| **Backend API** | `http://98.80.214.119:8000` |
+| **API Docs** | [Swagger UI](http://98.80.214.119:8000/docs) |
+| **Health Check** | [/health](http://98.80.214.119:8000/health) |
+
+## ✨ Features
 
 - **Landing Page**: Three visually stunning sport boxes (Football, Cricket, F1) with smooth animations
 - **Selection Page**: Dynamic country/team selection interface based on chosen sport
@@ -13,10 +26,19 @@ A modern web application that allows users to select and follow their favorite s
 - **Beautiful Design**: Modern gradient backgrounds, glassmorphism effects, and smooth transitions
 - **Responsive**: Fully responsive design that works on all devices
 
-## Project Structure
+## 🏗️ Architecture
 
 ```
-Project_1/
+┌─────────────────┐     ┌─────────────────┐     ┌─────────────────┐
+│   GitHub Pages  │────▶│   AWS EC2       │────▶│   DynamoDB      │
+│   (Frontend)    │     │   (FastAPI)     │     │   (Database)    │
+└─────────────────┘     └─────────────────┘     └─────────────────┘
+```
+
+## 📁 Project Structure
+
+```
+GameAlert/
 ├── index.html              # Main landing page with sport boxes
 ├── selection.html          # Selection page for countries/teams
 ├── login.html              # User authentication page
@@ -40,18 +62,53 @@ Project_1/
 │   └── config.js          # AWS Cognito configuration
 ├── backend/
 │   ├── main.py            # FastAPI backend server
+│   ├── dynamodb_manager.py # DynamoDB operations
+│   ├── aws_config.py      # AWS configuration
 │   ├── requirements.txt   # Python dependencies
 │   ├── start.sh           # Server startup script
 │   └── stop.sh            # Server stop script
-├── Schedules/
-│   └── Cricket/
-│       └── International/
-│           └── India/
-│               └── India_Internation.json  # Schedule data
-└── README.md              # Project documentation
+├── Schedules/             # Sports schedule JSON files
+│   ├── Cricket/
+│   ├── Football/
+│   └── F1/
+└── .github/
+    └── workflows/
+        └── deploy-frontend.yml  # GitHub Actions for frontend deployment
 ```
 
-## Setup
+## 🚀 Deployment
+
+### Frontend (GitHub Pages - Automatic)
+
+The frontend is automatically deployed via GitHub Actions when you push to the `main` branch.
+
+### Backend (AWS EC2)
+
+The backend is deployed on AWS EC2 and runs as a systemd service.
+
+**Server Details:**
+- **Instance**: t2.micro (Free Tier)
+- **OS**: Amazon Linux 2023
+- **IP**: `98.80.214.119`
+- **Port**: `8000`
+
+**Useful Commands (SSH into EC2 first):**
+```bash
+# Check status
+sudo systemctl status sportshub
+
+# View logs
+sudo journalctl -u sportshub -f
+
+# Restart after code changes
+cd ~/GameAlert && git pull
+sudo systemctl restart sportshub
+
+# Stop service
+sudo systemctl stop sportshub
+```
+
+## 🛠️ Local Development
 
 ### Backend Setup
 
@@ -66,58 +123,61 @@ python3 -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 ```
 
-3. Install dependencies:
+3. Set AWS credentials:
 ```bash
-pip install -r requirements.txt
+export AWS_ACCESS_KEY_ID="your-key"
+export AWS_SECRET_ACCESS_KEY="your-secret"
+export AWS_REGION="us-east-1"
 ```
 
-4. Start the server:
+4. Install dependencies and run:
 ```bash
-./start.sh
-# Or: python3 main.py
+pip install -r requirements.txt
+python3 main.py
 ```
 
 The API will be available at `http://localhost:8000`
 
 ### Frontend Setup
 
-1. Configure AWS Cognito in `js/config.js`:
-   - Update `region` with your AWS region
-   - Update `userPoolId` with your Cognito User Pool ID
-   - Update `clientId` with your Cognito App Client ID
+1. Configure AWS Cognito in `js/config.js`
+2. Update `API_BASE_URL` in `js/api.js` to point to your backend
+3. Open `index.html` in a browser or use a local server
 
-2. Open `index.html` in a web browser (or access via `http://localhost:8000` if backend is running)
+## 🔧 Technologies
 
-## Technologies Used
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | HTML5, CSS3, Vanilla JavaScript |
+| **Backend** | FastAPI (Python 3.11) |
+| **Database** | AWS DynamoDB |
+| **Authentication** | AWS Cognito |
+| **Hosting (Frontend)** | GitHub Pages |
+| **Hosting (Backend)** | AWS EC2 |
+| **CI/CD** | GitHub Actions |
 
-- **Frontend**: HTML5, CSS3, Vanilla JavaScript
-- **Backend**: FastAPI (Python)
-- **Authentication**: AWS Cognito
-- **Storage**: FastAPI in-memory storage (can be upgraded to database)
-
-## Features
-
-- User registration and login with AWS Cognito
-- Sport and team selection with temporary storage for non-logged-in users
-- Automatic migration of selections after signup/login
-- Real-time schedule loading from JSON files
-- Match status calculation (Scheduled/Live/Completed)
-- Match saving and management
-- Browser notifications for match reminders
-- Calendar and list views for matches
-
-## Browser Support
+## 📱 Browser Support
 
 Works on all modern browsers:
-- Chrome
-- Firefox
-- Safari
-- Edge
+- ✅ Chrome
+- ✅ Firefox
+- ✅ Safari
+- ✅ Edge
 
-## Notes
+## 🔐 Environment Variables
 
-- Images are loaded from Unsplash CDN
-- Schedules are loaded from JSON files in the `Schedules/` directory
-- Match status is calculated based on current date/time
-- Browser notifications require user permission
+The backend requires these environment variables:
 
+| Variable | Description |
+|----------|-------------|
+| `AWS_ACCESS_KEY_ID` | AWS IAM access key |
+| `AWS_SECRET_ACCESS_KEY` | AWS IAM secret key |
+| `AWS_REGION` | AWS region (e.g., `us-east-1`) |
+
+## 📝 License
+
+MIT License - feel free to use this project for learning and development!
+
+---
+
+Made with ❤️ by [revvsivaraju](https://github.com/revvsivaraju)

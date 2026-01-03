@@ -9,6 +9,7 @@ Thumbs.db
 
 # Security - Never commit credentials!
 *accessKeys*.csv
+*.pem
 
 # Editor files
 .vscode/
